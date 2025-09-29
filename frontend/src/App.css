@@ -1,0 +1,59 @@
+.component-container {
+  display: grid;
+  place-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Make all direct children occupy the same grid cell to create an overlay */
+.component-container > * {
+  grid-area: 1 / 1;
+}
+
+.galaxy-container {
+  width: 100%;
+  height: 100%;
+  z-index: 0; /* Background layer */
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end; /* Align content to the bottom */
+  z-index: 2; /* Ensure content is on top of vignette */
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Allow mouse events to pass through to the galaxy */
+  padding-bottom: 50vh; /* Push content up so the subhead is centered */
+  box-sizing: border-box;
+}
+
+.page-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: auto; /* Re-enable mouse events for content */
+}
+
+.search-bar-wrapper {
+  max-width: 600px;
+  width: 90%;
+  pointer-events: auto; /* Re-enable mouse events for content */
+}
+
+.title.split-parent {
+  font-size: 8rem;
+  color: white;
+  text-align: center;
+  margin-bottom: 0; /* Remove margin to bring subhead closer */
+  line-height: 1; /* Adjust line height to tighten spacing */
+}
+
+.subhead.split-parent {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  max-width: 40ch; /* Prevent subhead from being too wide */
+  margin-bottom: 2.5rem; /* Space between subhead and search bar */
+}

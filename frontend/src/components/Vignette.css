@@ -1,0 +1,10 @@
+.vignette-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0) 50%, rgba(0,0,0,0.7) 100%);
+  z-index: 1; /* Position between galaxy and content */
+  pointer-events: none; /* Allow mouse to pass through */
+}
