@@ -7,7 +7,7 @@ const queries = [
   "gene editing",
   "quantum computing",
   "blockchain technology",
-];
+].map(q => q.toLowerCase());
 
 const GlassSearchBar = () => {
   const [inputValue, setInputValue] = useState('');
@@ -86,7 +86,7 @@ const GlassSearchBar = () => {
           </div>
           <div className={`search-suggestions ${showSuggestions || inputValue ? 'active' : ''}`}>
             <div className="suggestion-group">
-              <h4>Suggestions</h4>
+              <h4>suggestions</h4>
               <ul>
                 {queries.map((query) => (
                   <li key={query} onClick={() => handleSuggestionClick(query)}>

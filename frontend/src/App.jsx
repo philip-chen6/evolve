@@ -1,13 +1,11 @@
 import "./App.css";
 import Galaxy from "./components/Galaxy";
+import DecryptedText from "./components/DecryptedText";
 import SplitText from "./components/Text";
 import GlassSearchBar from "./components/GlassSearchBar";
 import Vignette from "./components/Vignette";
 
 function App() {
-  const handleAnimationComplete = () => {
-    console.log("All letters have animated!");
-  };
   return (
     <div className="component-container">
       <Galaxy
@@ -22,17 +20,9 @@ function App() {
       <Vignette />
       <div className="content-container">
         <header className="page-header">
-          <SplitText
-            text="evolve"
-            className="title"
-            delay={100}
-            duration={0.6}
-            ease="power3.out"
-            splitType="chars"
-            from={{ opacity: 0, y: 40 }}
-            to={{ opacity: 1, y: 0 }}
-            onLetterAnimationComplete={handleAnimationComplete}
-          />
+          <h1 className="title">
+            <DecryptedText text="evolve" animateOn="view" sequential={true} speed={150} />
+          </h1>
           <SplitText
             text="generate a timeline of key papers for any topic."
             className="subhead"
