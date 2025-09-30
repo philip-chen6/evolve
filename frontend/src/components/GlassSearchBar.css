@@ -111,6 +111,17 @@
   transition: opacity 0.3s ease;
 }
 
+.placeholder {
+  position: absolute;
+  left: 65px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+  font-size: 16px;
+  font-family: 'Geist', sans-serif;
+}
+
 .search-input:focus::placeholder {
   opacity: 0.4;
 }

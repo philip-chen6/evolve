@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './GlassSearchBar.css';
+import DecryptedText from './DecryptedText';
 
 const queries = [
   "large language models",
@@ -73,13 +74,18 @@ const GlassSearchBar = () => {
             <input
               ref={inputRef}
               type="text"
-              placeholder="search..."
+              placeholder=""
               className="search-input"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onFocus={handleFocus}
               onBlur={handleBlur}
             />
+            {!inputValue && (
+              <div className="placeholder">
+                <DecryptedText text="search..." animateOn="view" sequential={true} speed={50} />
+              </div>
+            )}
             <button className="search-clear" aria-label="Clear search" onClick={handleClear}>
               <i className="fas fa-times" />
             </button>
