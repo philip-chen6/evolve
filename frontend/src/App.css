@@ -20,12 +20,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end; /* Align content to the bottom */
+  justify-content: center; /* Align content to the center */
   z-index: 2; /* Ensure content is on top of vignette */
   width: 100%;
   height: 100%;
   pointer-events: none; /* Allow mouse events to pass through to the galaxy */
-  padding-bottom: 50vh; /* Push content up so the subhead is centered */
   box-sizing: border-box;
 }
 
@@ -37,6 +36,8 @@
 }
 
 .search-bar-wrapper {
+  display: flex;
+  justify-content: center;
   max-width: 600px;
   width: 90%;
   pointer-events: auto; /* Re-enable mouse events for content */

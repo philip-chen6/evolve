@@ -1,7 +1,7 @@
 import "./App.css";
 import Galaxy from "./components/Galaxy";
 import SplitText from "./components/Text";
-import ChatInput from "./components/ChatInput";
+import GlassSearchBar from "./components/GlassSearchBar";
 import Vignette from "./components/Vignette";
 
 function App() {
@@ -46,7 +46,7 @@ function App() {
           />
         </header>
         <div className="search-bar-wrapper">
-          <ChatInput onSend={(text) => console.log(text)} />
+          <GlassSearchBar />
         </div>
       </div>
     </div>
