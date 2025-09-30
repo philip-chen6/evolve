@@ -1,7 +1,7 @@
 import "./App.css";
 import Galaxy from "./components/Galaxy";
 import SplitText from "./components/Text";
-import SearchBar from "./components/SearchBar";
+import ChatInput from "./components/ChatInput";
 import Vignette from "./components/Vignette";
 
 function App() {
@@ -17,6 +17,7 @@ function App() {
         glowIntensity={0.5}
         saturation={0.5}
         hueShift={200}
+        repulsionStrength={0.5}
       />
       <Vignette />
       <div className="content-container">
@@ -45,7 +46,7 @@ function App() {
           />
         </header>
         <div className="search-bar-wrapper">
-          <SearchBar />
+          <ChatInput onSend={(text) => console.log(text)} />
         </div>
       </div>
     </div>
