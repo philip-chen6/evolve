@@ -15,21 +15,16 @@ const GlassSearchBar = () => {
   const glassRef = useRef(null);
   const inputRef = useRef(null);
 
-  const handleFocus = () => {
-    setShowSuggestions(true);
-  };
-
+  const handleFocus = () => setShowSuggestions(true);
   const handleBlur = (e) => {
     if (!e.relatedTarget || !e.relatedTarget.closest('.search-suggestions')) {
       setShowSuggestions(false);
     }
   };
-
   const handleClear = () => {
     setInputValue('');
     inputRef.current?.focus();
   };
-
   const handleSuggestionClick = (query) => {
     setInputValue(query);
     setShowSuggestions(false);
@@ -37,71 +32,70 @@ const GlassSearchBar = () => {
   };
 
   useEffect(() => {
+    const currentRef = glassRef.current;
     const handleMouseMove = (e) => {
-      const rect = glassRef.current.getBoundingClientRect();
+      if (!currentRef) return;
+      const rect = currentRef.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      
-      const specular = glassRef.current.querySelector('.glass-specular');
+      const specular = currentRef.querySelector('.glass-specular');
       if (specular) {
-        specular.style.background = `radial-gradient(
-          circle at ${x}px ${y}px,
-          rgba(255,255,255,0.15) 0%,
-          rgba(255,255,255,0.05) 30%,
-          rgba(255,255,255,0) 60%
-        )`;
+        specular.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 30%, rgba(255,255,255,0) 60%)`;
       }
     };
-
     const handleMouseLeave = () => {
-      const specular = glassRef.current.querySelector('.glass-specular');
+      if (!currentRef) return;
+      const specular = currentRef.querySelector('.glass-specular');
       if (specular) {
         specular.style.background = 'none';
       }
     };
-
-    const element = glassRef.current;
-    element.addEventListener('mousemove', handleMouseMove);
-    element.addEventListener('mouseleave', handleMouseLeave);
-
+    currentRef?.addEventListener('mousemove', handleMouseMove);
+    currentRef?.addEventListener('mouseleave', handleMouseLeave);
     return () => {
-      element.removeEventListener('mousemove', handleMouseMove);
-      element.removeEventListener('mouseleave', handleMouseLeave);
+      currentRef?.removeEventListener('mousemove', handleMouseMove);
+      currentRef?.removeEventListener('mouseleave', handleMouseLeave);
     };
   }, []);
 
   return (
-    <div className="glass-search" ref={glassRef}>
-      <div className="glass-filter"></div>
-      <div className="glass-overlay"></div>
-      <div className="glass-specular"></div>
-      <div className="glass-content">
-        <div className={`search-container ${showSuggestions ? 'expanded' : ''}`}>
-          <i className="fas fa-search search-icon"></i>
-          <input
-            ref={inputRef}
-            type="text"
-            placeholder="search..."
-            className="search-input"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-          />
-          <button className="search-clear" aria-label="Clear search" onClick={handleClear}>
-            <i className="fas fa-times"></i>
-          </button>
-        </div>
-        <div className={`search-suggestions ${showSuggestions || inputValue ? 'active' : ''}`}>
-          <div className="suggestion-group">
-            <h4>Suggestions</h4>
-            <ul>
-              {queries.map((query) => (
-                <li key={query} onClick={() => handleSuggestionClick(query)}>
-                  <i className="fas fa-arrow-trend-up"></i>{query}
-                </li>
-              ))}
-            </ul>
+    <div className="glass-search-container">
+      <div
+        className="glass-search"
+        ref={glassRef}
+      >
+        <div className="glass-filter" />
+        <div className="glass-overlay" />
+        <div className="glass-specular" />
+        <div className="glass-content">
+          <div className={`search-container ${showSuggestions ? 'expanded' : ''}`}>
+            <i className="fas fa-search search-icon" />
+            <input
+              ref={inputRef}
+              type="text"
+              placeholder="search..."
+              className="search-input"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            />
+            <button className="search-clear" aria-label="Clear search" onClick={handleClear}>
+              <i className="fas fa-times" />
+            </button>
+          </div>
+          <div className={`search-suggestions ${showSuggestions || inputValue ? 'active' : ''}`}>
+            <div className="suggestion-group">
+              <h4>Suggestions</h4>
+              <ul>
+                {queries.map((query) => (
+                  <li key={query} onClick={() => handleSuggestionClick(query)}>
+                    <i className="fas fa-arrow-trend-up" />
+                    {query}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </div>

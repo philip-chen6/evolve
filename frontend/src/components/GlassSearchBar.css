@@ -1,16 +1,26 @@
-.glass-search {
-  --bg-color: rgba(255, 255, 255, 0.25);
-  --highlight: rgba(255, 255, 255, 0.75);
-  --text: #ffffff;
-  --input-bg: rgba(255, 255, 255, 0.1);
-  --input-border: rgba(255, 255, 255, 0.2);
-  --input-focus: rgba(255, 255, 255, 0.3);
-  
+.glass-search-container {
   position: relative;
   width: 500px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.glass-search {
+  --bg-color: rgba(255, 255, 255, 0.3);
+  --highlight: rgba(255, 255, 255, 0.85);
+  --text: #ffffff;
+  --input-bg: rgba(255, 255, 255, 0.15);
+  --input-border: rgba(255, 255, 255, 0.4);
+  --input-focus: rgba(255, 255, 255, 0.35);
+  
+  position: relative;
+  width: 100%;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
+  z-index: 1;
 }
 
 .glass-filter,
