@@ -16,6 +16,8 @@ function App() {
         saturation={0.5}
         hueShift={200}
         repulsionStrength={0.5}
+        twinkleIntensity={0.4}
+        rotationSpeed={0.1}
       />
       <Vignette />
       <div className="content-container">
