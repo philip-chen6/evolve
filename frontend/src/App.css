@@ -51,6 +51,7 @@
   margin-bottom: 0; /* Remove margin to bring subhead closer */
   line-height: 1; /* Adjust line height to tighten spacing */
   font-weight: 100;
+  text-shadow: 0 0 35px rgba(255, 255, 255, 0.5);
 }
 
 .subhead {
@@ -59,4 +60,5 @@
   text-align: center;
   max-width: 40ch; /* Prevent subhead from being too wide */
   margin-bottom: 2.5rem; /* Space between subhead and search bar */
+  text-shadow: 0 0 35px rgba(255, 255, 255, 0.5);
 }

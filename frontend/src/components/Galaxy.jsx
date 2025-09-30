@@ -1,5 +1,6 @@
 import { Renderer, Program, Mesh, Color, Triangle } from "ogl";
 import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
 import "./Galaxy.css";
 
 const vertexShader = `
@@ -171,22 +172,23 @@ void main() {
 `;
 
 export default function Galaxy({
-  focal = [0.5, 0.5],
+  focal = [0.5, 0.25],
   rotation = [1.0, 0.0],
-  starSpeed = 0.5,
-  density = 1,
-  hueShift = 140,
+  starSpeed = 0.4,
+  density = 1.3,
+  hueShift = 120,
   disableAnimation = false,
-  speed = 1.0,
+  speed = 0.67,
   mouseInteraction = true,
-  glowIntensity = 0.3,
-  saturation = 0.0,
+  glowIntensity = 0.7,
+  saturation = 0,
   mouseRepulsion = true,
-  repulsionStrength = 2,
+  repulsionStrength = 1,
   twinkleIntensity = 0.3,
   rotationSpeed = 0.1,
   autoCenterRepulsion = 0,
   transparent = true,
+  animateIn = false,
   ...rest
 }) {
   const ctnDom = useRef(null);
@@ -265,6 +267,11 @@ export default function Galaxy({
       },
     });
 
+    if (animateIn) {
+      gsap.fromTo(program.uniforms.uDensity, { value: 1 }, { value: density, duration: 3, ease: "power3.out" });
+      gsap.fromTo(program.uniforms.uStarSpeed, { value: 1 }, { value: starSpeed, duration: 6.9, ease: "power3.out" });
+    }
+
     const mesh = new Mesh(gl, { geometry, program });
     let animateId;
 
@@ -272,7 +279,9 @@ export default function Galaxy({
       animateId = requestAnimationFrame(update);
       if (!disableAnimation) {
         program.uniforms.uTime.value = t * 0.001;
-        program.uniforms.uStarSpeed.value = (t * 0.001 * starSpeed) / 10.0;
+        if (!animateIn) {
+          program.uniforms.uStarSpeed.value = (t * 0.001 * starSpeed) / 10.0;
+        }
       }
 
       const lerpFactor = 0.05;
@@ -337,6 +346,7 @@ export default function Galaxy({
     repulsionStrength,
     autoCenterRepulsion,
     transparent,
+    animateIn,
   ]);
 
   return <div ref={ctnDom} className="galaxy-container" {...rest} />;

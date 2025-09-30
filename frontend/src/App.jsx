@@ -4,10 +4,12 @@ import DecryptedText from "./components/DecryptedText";
 import SplitText from "./components/Text";
 import GlassSearchBar from "./components/GlassSearchBar";
 import Vignette from "./components/Vignette";
+import BlackOverlay from "./components/BlackOverlay";
 
 function App() {
   return (
     <div className="component-container">
+      <BlackOverlay />
       <Galaxy
         mouseRepulsion={true}
         mouseInteraction={true}
@@ -18,6 +20,7 @@ function App() {
         repulsionStrength={0.5}
         twinkleIntensity={0.4}
         rotationSpeed={0.1}
+        animateIn={true}
       />
       <Vignette />
       <div className="content-container">
