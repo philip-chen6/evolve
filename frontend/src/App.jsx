@@ -27,12 +27,9 @@ function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
   const [isTimelinePage, setIsTimelinePage] = useState(window.location.hash.startsWith('#timeline'));
 
-  useEffect(() => {
-    if (isFadeComplete && overlayColor === '#ffffff') {
-      const query = encodeURIComponent(searchQuery);
-      window.location.hash = `timeline?q=${query}`;
-    }
-  }, [isFadeComplete, overlayColor, searchQuery]);
+  
+
+  
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -46,6 +43,13 @@ function App() {
       window.removeEventListener('hashchange', handleHashChange);
     };
   }, []);
+  
+  useEffect(() => {
+    if (isFadeComplete && overlayColor === '#ffffff') {
+      const query = encodeURIComponent(searchQuery);
+      window.location.hash = `timeline?q=${query}`;
+    }
+  }, [isFadeComplete, overlayColor, searchQuery]);
   
   const handleMouseMove = (event) => {
     const { clientX, clientY, currentTarget } = event;

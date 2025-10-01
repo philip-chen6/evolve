@@ -38,8 +38,6 @@ const GlassSearchBar = () => {
     e.preventDefault();
     if (inputValue.trim() !== '' && !isFadingToBlack) {
       submitSearch(inputValue.trim());
-      // Keep input value for the timeline page
-      // setInputValue(''); 
       setShowSuggestions(false);
     }
   };
