@@ -11,6 +11,7 @@ app.use(express.json()); // parse JSON request bodies (for future)
 
 // Helper functions
 
+// Accept 4.5
 async function fetchCandidates(query, limit=40){
     
 }
