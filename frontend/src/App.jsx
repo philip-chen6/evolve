@@ -1,6 +1,6 @@
 import "./App.css";
 import { Canvas } from "@react-three/fiber";
-import { Suspense } from "react";
+import { Suspense, useState, useMemo } from "react";
 import { NoToneMapping } from "three";
 import Galaxy from "./components/Galaxy"; // The original OGL galaxy
 import { Galaxy as GalaxyScene } from "./components/Galaxy/Galaxy.jsx"; // The new R3F galaxy
@@ -18,28 +18,23 @@ import {
 } from "@react-three/postprocessing";
 import { useSceneStore } from "./core/SceneManager";
 
+const galaxyFocal = [0.5, 0.25];
+const galaxyRotation = [1.0, 0.0];
+
 function App() {
   const { isLoading, isIntroComplete } = useSceneStore();
+  const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
 
-  return (
-    <div className="component-container">
-      {isLoading && <LoadingScreen />}
-      <Overlay />
-      {/* Layer 1: Original interactive galaxy background */}
-      <Galaxy
-        mouseRepulsion={true}
-        mouseInteraction={true}
-        density={1}
-        glowIntensity={0.5}
-        saturation={0.5}
-        hueShift={200}
-        repulsionStrength={0.5}
-        twinkleIntensity={0.4}
-        rotationSpeed={0.1}
-        animateIn={false}
-      />
+  const handleMouseMove = (event) => {
+    const { clientX, clientY, currentTarget } = event;
+    const { left, top, width, height } = currentTarget.getBoundingClientRect();
+    const x = (clientX - left) / width;
+    const y = 1.0 - (clientY - top) / height; // Invert Y for shader coordinate system
+    setMousePosition({ x, y });
+  };
 
-      {/* Layer 2: New static galaxy, rendered on a transparent canvas */}
+  const galaxySceneCanvas = useMemo(
+    () => (
       <Canvas
         className="galaxy-scene-canvas"
         camera={{ position: [0, -10, 4.5], fov: 75 }}
@@ -61,6 +56,33 @@ function App() {
           </Selection>
         </Suspense>
       </Canvas>
+    ),
+    []
+  );
+
+  return (
+    <div className="component-container" onMouseMove={handleMouseMove}>
+      {isLoading && <LoadingScreen />}
+      <Overlay />
+      {/* Layer 1: Original interactive galaxy background */}
+      <Galaxy
+        focal={galaxyFocal}
+        rotation={galaxyRotation}
+        mouseRepulsion={true}
+        mouseInteraction={false} // Disable internal listener
+        mousePosition={mousePosition} // Pass position as prop
+        density={1}
+        glowIntensity={0.5}
+        saturation={0.5}
+        hueShift={200}
+        repulsionStrength={1.0}
+        twinkleIntensity={0.4}
+        rotationSpeed={0.1}
+        animateIn={false}
+      />
+
+      {/* Layer 2: New static galaxy, rendered on a transparent canvas */}
+      {galaxySceneCanvas}
 
       {/* Layer 3: UI Elements */}
       <Vignette />

@@ -139,7 +139,7 @@ void main() {
     vec2 mousePosUV = (uMouse * uResolution.xy - focalPx) / uResolution.y;
     float mouseDist = length(uv - mousePosUV);
     vec2 repulsion = normalize(uv - mousePosUV) * (uRepulsionStrength / (mouseDist + 0.1));
-    uv += repulsion * 0.05 * uMouseActiveFactor;
+    uv += repulsion * 0.0125 * uMouseActiveFactor;
   } else {
     vec2 mouseOffset = mouseNorm * 0.1 * uMouseActiveFactor;
     uv += mouseOffset;
@@ -180,6 +180,7 @@ export default function Galaxy({
   disableAnimation = false,
   speed = 0.67,
   mouseInteraction = true,
+  mousePosition, // New prop
   glowIntensity = 0.7,
   saturation = 0,
   mouseRepulsion = true,
@@ -197,6 +198,14 @@ export default function Galaxy({
   const targetMouseActive = useRef(0.0);
   const smoothMouseActive = useRef(0.0);
 
+  // Effect to update mouse position from prop
+  useEffect(() => {
+    if (mousePosition) {
+      targetMousePos.current = mousePosition;
+      targetMouseActive.current = 1.0; // Assume mouse is active when prop is passed
+    }
+  }, [mousePosition]);
+  
   useEffect(() => {
     if (!ctnDom.current) return;
     const ctn = ctnDom.current;
