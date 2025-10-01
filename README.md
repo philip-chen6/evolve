@@ -4,12 +4,12 @@ an interactive timeline generator that tells the story of anything. click on the
 
 <div align="center">
   <a href="https://www.youtube.com/watch?v=N8VTFyMq1U0">
-    <img src="./media/demo.gif" alt="demo" style="width: 100%; height: auto;">
+    <img src="./media/demo.gif" alt="demo" width="100%">
   </a>
   <br><br>
-  <img src="./media/landing.png" alt="landing page" style="width: 100%; height: auto;">
+  <img src="./media/landing.png" alt="landing page" width="100%">
   <br><br>
-  <img src="./media/timeline.png" alt="timeline" style="width: 100%; height: auto;">
+  <img src="./media/timeline.png" alt="timeline" width="100%">
 </div>
 
 ## about
