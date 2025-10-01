@@ -9,16 +9,16 @@ import './Timeline.css';
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 const loadingSteps = [
-    "initiating quantum entanglement...",
-    "calibrating neural network...",
-    "compiling historical data...",
-    "cross-referencing academic papers...",
-    "identifying key breakthroughs...",
-    "generating chronological nodes...",
-    "simulating historical accuracy...",
-    "rendering timeline visualization...",
-    "applying temporal filters...",
-    "finalizing data stream..."
+    "analyzing historical data...",
+    "identifying key events...",
+    "cross-referencing sources...",
+    "consulting digital archives...",
+    "generating timeline nodes...",
+    "structuring chronological data...",
+    "verifying dates and details...",
+    "rendering visualization...",
+    "optimizing for clarity...",
+    "finalizing timeline..."
 ];
 
 const SimpleSpinner = () => {
@@ -27,7 +27,7 @@ const SimpleSpinner = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentStep(prevStep => (prevStep + 1) % loadingSteps.length);
-        }, 2000); // Change text every 2 seconds
+        }, 1250); // Change text every 1.25 seconds
 
         return () => clearInterval(interval);
     }, []);
@@ -43,10 +43,18 @@ const SimpleSpinner = () => {
 const TimelineView = ({ timelineData, promptTopic }) => {
   const [displayedCount, setDisplayedCount] = useState(0);
   const [isAnimationComplete, setIsAnimationComplete] = useState(false);
+  const [titleWidth, setTitleWidth] = useState(0);
   const scrollContainerRef = useRef(null);
+  const titleRef = useRef(null);
 
   const { scrollY } = useScroll({ container: scrollContainerRef });
   const opacity = useTransform(scrollY, [0, 100], [1, 0]);
+
+  useEffect(() => {
+    if (titleRef.current) {
+      setTitleWidth(titleRef.current.offsetWidth);
+    }
+  }, [promptTopic]);
 
   useEffect(() => {
     if (timelineData.length > 0) {
@@ -86,11 +94,13 @@ const TimelineView = ({ timelineData, promptTopic }) => {
 
   return (
     <>
-      <motion.div className="timeline-title" style={{ opacity }}>
+      <motion.div className="timeline-title" style={{ opacity }} ref={titleRef}>
         <DecryptedText
           text={`timeline for ${promptTopic}`.toLowerCase()}
           animateOn="view"
+          speed={100}
         />
+        <h2 className="timeline-subheading">powered by claude sonnet 4.5</h2>
       </motion.div>
       <div 
         className={`timeline-scroll-container ${!isAnimationComplete ? 'no-scroll' : ''}`} 
@@ -141,7 +151,7 @@ const Timeline = () => {
       try {
         const prompt = `Generate a timeline of key papers and events for the topic: ${promptTopic}. Provide 6 events. For each event, give me a title, a one-sentence summary, and the year. Return the data as a valid JSON array of objects, where each object has "id", "title", "summary", and "date" keys. Ensure the JSON is clean and contains only the array.`;
         
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${API_KEY}`, {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }),
