@@ -6,12 +6,37 @@ import './Timeline.css';
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
-const SimpleSpinner = ({ topic }) => (
-    <div className="spinner-container">
-        <div className="prompt-text">timeline for {topic}.</div>
-        <div className="spinner-grow" />
-    </div>
-);
+const loadingSteps = [
+    "initiating quantum entanglement...",
+    "calibrating neural network...",
+    "compiling historical data...",
+    "cross-referencing academic papers...",
+    "identifying key breakthroughs...",
+    "generating chronological nodes...",
+    "simulating historical accuracy...",
+    "rendering timeline visualization...",
+    "applying temporal filters...",
+    "finalizing data stream..."
+];
+
+const SimpleSpinner = () => {
+    const [currentStep, setCurrentStep] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentStep(prevStep => (prevStep + 1) % loadingSteps.length);
+        }, 2000); // Change text every 2 seconds
+
+        return () => clearInterval(interval);
+    }, []);
+
+    return (
+        <div className="spinner-container">
+            <div className="prompt-text">{loadingSteps[currentStep]}</div>
+            <div className="spinner-grow" />
+        </div>
+    );
+};
 
 const Timeline = () => {
   const [loading, setLoading] = useState(true);
@@ -90,7 +115,7 @@ const Timeline = () => {
           backgroundColor="transparent"
         />
         {loading ? (
-          <SimpleSpinner topic={promptTopic} />
+          <SimpleSpinner />
         ) : error ? (
           <div className="error-message">{error}</div>
         ) : (

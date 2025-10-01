@@ -85,7 +85,7 @@
 .vertical-timeline::before {
   top: calc(50vh - 30px);
   height: 0; /* Start with no height */
-  animation: draw-line 1s ease-out 1s forwards; /* 1s duration, 1s delay */
+  animation: draw-line 4s ease-in-out 1s forwards; /* 4s duration, 1s delay */
 }
 
 @keyframes draw-line {
