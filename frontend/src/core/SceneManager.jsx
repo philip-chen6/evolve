@@ -3,6 +3,7 @@ import { create } from 'zustand';
 import { SCENE_MANAGER } from '../config/config';
 
 export const useSceneStore = create((set, get) => ({
+  searchQuery: '',
   loadingProgress: 0,
   loadingText: undefined,
 
@@ -36,13 +37,13 @@ export const useSceneStore = create((set, get) => ({
     set({ isFullscreenActive: isActive });
   },
 
-  submitSearch: () => set({ isSearchSubmitted: true }),
+  submitSearch: (query) => set({ isSearchSubmitted: true, searchQuery: query }),
   startFadeToBlack: () => set({ isFadingToBlack: true }),
   setOverlayColor: (color) => set({ overlayColor: color }),
   setIsLoading: (loading) => set({ isLoading: loading }),
   setIntroComplete: () => set({ isIntroComplete: true }),
   completeFade: () => set({ isFadeComplete: true }),
-  resetSearch: () => set({ isSearchSubmitted: false }),
+  resetSearch: () => set({ isSearchSubmitted: false, searchQuery: '' }),
 
   getZoomOutCameraData: (scene) => {
     const { zoomOutCameraData } = get();

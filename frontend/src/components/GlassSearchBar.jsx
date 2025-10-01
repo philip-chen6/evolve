@@ -37,8 +37,9 @@ const GlassSearchBar = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (inputValue.trim() !== '' && !isFadingToBlack) {
-      submitSearch();
-      setInputValue('');
+      submitSearch(inputValue.trim());
+      // Keep input value for the timeline page
+      // setInputValue(''); 
       setShowSuggestions(false);
     }
   };

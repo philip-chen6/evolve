@@ -23,24 +23,20 @@ const galaxyFocal = [0.5, 0.25];
 const galaxyRotation = [1.0, 0.0];
 
 function App() {
-  const { isLoading, isIntroComplete, isFadeComplete, overlayColor } = useSceneStore();
+  const { isLoading, isIntroComplete, isFadeComplete, overlayColor, searchQuery } = useSceneStore();
   const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
-  const [isTimelinePage, setIsTimelinePage] = useState(window.location.hash === '#timeline');
+  const [isTimelinePage, setIsTimelinePage] = useState(window.location.hash.startsWith('#timeline'));
 
   useEffect(() => {
     if (isFadeComplete && overlayColor === '#ffffff') {
-      window.location.hash = 'timeline';
+      const query = encodeURIComponent(searchQuery);
+      window.location.hash = `timeline?q=${query}`;
     }
-  }, [isFadeComplete, overlayColor]);
+  }, [isFadeComplete, overlayColor, searchQuery]);
 
   useEffect(() => {
-    // On initial load, if the hash is #timeline, remove it to go to the main page.
-    if (window.location.hash === '#timeline') {
-      window.history.replaceState(null, '', ' ');
-    }
-
     const handleHashChange = () => {
-      setIsTimelinePage(window.location.hash === '#timeline');
+      setIsTimelinePage(window.location.hash.startsWith('#timeline'));
     };
 
     window.addEventListener('hashchange', handleHashChange);
