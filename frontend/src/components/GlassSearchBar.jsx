@@ -6,8 +6,6 @@ const queries = [
   "large language models",
   "graph algorithms",
   "gene editing",
-  "quantum computing",
-  "blockchain technology",
 ].map(q => q.toLowerCase());
 
 const GlassSearchBar = () => {

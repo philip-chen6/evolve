@@ -55,9 +55,12 @@
 
 .search-container {
   position: relative;
-  padding: 21px 20px 19px;
   display: flex;
   align-items: center;
+  justify-content: center; /* Center the input vertically */
+  height: 100px; /* Give the container a fixed height */
+  padding: 20px; /* Apply consistent padding */
+  box-sizing: border-box;
   transition: padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 

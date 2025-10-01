@@ -166,7 +166,7 @@ export function Galaxy() {
   });
 
   return (
-    <group dispose={null} ref={galaxyRef}>
+    <group dispose={null} ref={galaxyRef} position={[0, -5.0, 0]}>
       <light
         position={[0, 0, 0]}
         intensity={0.5}

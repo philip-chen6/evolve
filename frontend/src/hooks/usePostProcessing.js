@@ -19,11 +19,9 @@ export function useBaseComposer(isVisible) {
     if (!isVisible) return null;
 
     try {
-      renderer.setClearColor(0x000000, 0); // Clear to transparent
       renderer.autoClear = false;
       const comp = new EffectComposer(renderer);
       const renderPass = new RenderPass(scene, camera);
-      renderPass.clear = false;
       comp.addPass(renderPass);
 
       return comp;
@@ -69,9 +67,7 @@ export function useBloomComposer(isVisible) {
     try {
       bloomPass = new UnrealBloomPass(
         new Vector2(window.innerWidth * 0.5, window.innerHeight * 0.5),
-        0.4, // Strength
-        0.5, // Radius
-        0.85 // Threshold
+        1, 1, 0
       );
 
       outputPass = new OutputPass();

@@ -3,9 +3,11 @@
   place-items: center;
   width: 100vw;
   height: 100vh;
+  position: relative; /* Establish positioning context for absolute children */
+  overflow: hidden; /* Prevent scrollbars */
 }
 
-/* Make all direct children occupy the same grid cell to create an overlay */
+/* Stack all direct children in the same grid cell */
 .component-container > * {
   grid-area: 1 / 1;
 }
@@ -13,16 +15,16 @@
 .galaxy-container {
   width: 100%;
   height: 100%;
-  z-index: 0; /* Background layer */
+  z-index: 0; /* Original galaxy is the bottom layer */
 }
 
 .galaxy-scene-canvas {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* New galaxy is the middle layer */
   pointer-events: none;
 }
 
@@ -31,11 +33,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-end; /* Align content to the bottom */
-  z-index: 2; /* Ensure content is on top of vignette */
+  z-index: 2; /* UI is the top layer */
   width: 100%;
   height: 100%;
   pointer-events: none; /* Allow mouse events to pass through to the galaxy */
-  padding-bottom: calc(50vh - 50px); /* Center the search bar */
+  padding-bottom: calc(35vh - 50px); /* Move the entire block down */
   box-sizing: border-box;
 }
 
