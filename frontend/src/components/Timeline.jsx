@@ -8,7 +8,7 @@ const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 const SimpleSpinner = ({ topic }) => (
     <div className="spinner-container">
-        <div className="prompt-text">prompt for {topic}.</div>
+        <div className="prompt-text">timeline for {topic}.</div>
         <div className="spinner-grow" />
     </div>
 );

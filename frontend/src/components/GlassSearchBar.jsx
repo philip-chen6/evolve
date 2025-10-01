@@ -38,6 +38,7 @@ const GlassSearchBar = () => {
     e.preventDefault();
     if (inputValue.trim() !== '' && !isFadingToBlack) {
       submitSearch(inputValue.trim());
+      setInputValue(''); // Clear input immediately
       setShowSuggestions(false);
     }
   };
