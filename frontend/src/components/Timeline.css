@@ -131,6 +131,14 @@
   font-weight: normal !important;
 }
 
+.vertical-timeline-element-title a {
+  text-decoration: none;
+}
+
+.vertical-timeline-element-title a:hover {
+  text-decoration: underline;
+}
+
 .vertical-timeline-element-content p {
   font-weight: 300 !important;
 }

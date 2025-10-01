@@ -128,7 +128,7 @@ const TimelineView = ({ timelineData, promptTopic }) => {
             >
               <h3 className="vertical-timeline-element-title">
                 {item.url ? (
-                  <a href={item.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <a href={item.url} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>
                     {item.title}
                   </a>
                 ) : (
