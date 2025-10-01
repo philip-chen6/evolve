@@ -17,7 +17,8 @@ export function Galaxy() {
     currentScene,
     zoomDirection,
     getZoomOutCameraData, setZoomOutCameraData,
-    endTransition
+    endTransition,
+    startFadeToBlack,
   } = useSceneStore();
 
   const sceneKey = 'galaxy'
@@ -87,6 +88,7 @@ export function Galaxy() {
   })
 
   function zoomInGalaxyFunction() {
+    startFadeToBlack();
     setupZoomCamera(camera, 'galaxy', false, {
       getZoomOutCameraData,
       setZoomOutCameraData,

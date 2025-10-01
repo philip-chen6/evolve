@@ -14,7 +14,7 @@ const GlassSearchBar = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const glassRef = useRef(null);
   const inputRef = useRef(null);
-  const { submitSearch } = useSceneStore();
+  const { submitSearch, isFadingToBlack } = useSceneStore();
 
   const handleFocus = () => setShowSuggestions(true);
   const handleBlur = (e) => {
@@ -34,7 +34,7 @@ const GlassSearchBar = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (inputValue.trim() !== '') {
+    if (inputValue.trim() !== '' && !isFadingToBlack) {
       submitSearch();
     }
   };
