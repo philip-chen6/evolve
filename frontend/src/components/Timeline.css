@@ -27,6 +27,10 @@
   scrollbar-width: none;  /* Firefox */
 }
 
+.timeline-scroll-container.no-scroll {
+  overflow-y: hidden;
+}
+
 .timeline-scroll-container::-webkit-scrollbar {
   display: none; /* Chrome, Safari, and Opera */
 }
@@ -85,7 +89,7 @@
 .vertical-timeline::before {
   top: calc(50vh - 30px);
   height: 0; /* Start with no height */
-  animation: draw-line 4s ease-in-out 1s forwards; /* 4s duration, 1s delay */
+  animation: draw-line 2s ease 0.5s forwards; /* 2s duration, 0.5s delay */
 }
 
 @keyframes draw-line {
@@ -135,5 +139,15 @@
   color: #000;
   font-size: 1.2rem;
   z-index: 120;
+}
+
+.centered-svg-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: 60%;
+  fill: white;
 }
 
