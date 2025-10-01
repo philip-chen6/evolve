@@ -134,7 +134,7 @@ function App() {
           </h1>
           {isIntroComplete && (
             <SplitText
-              text="generate a timeline of key papers for any topic."
+              text="generate a timeline of key events for any topic."
               className="subhead"
               tag="p"
               delay={100}
