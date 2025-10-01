@@ -48,6 +48,7 @@
   overflow-y: auto;
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+  z-index: 103;
 }
 
 .timeline-scroll-container.no-scroll {
@@ -202,5 +203,11 @@
     height: 32px;
     margin-left: -16px;
     margin-top: -16px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .timeline-title {
+    top: 6rem;
   }
 }
