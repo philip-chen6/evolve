@@ -66,19 +66,22 @@
 /* Custom Spinner */
 .spinner-container {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 120;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  z-index: 120;
 }
 
 .prompt-text {
   margin-bottom: 20px;
   font-size: 1.2rem;
   color: #000;
+  text-align: center;
 }
 
 .spinner-grow {
@@ -185,3 +188,11 @@
   margin-top: -22px;
 }
 
+@media screen and (max-width: 1170px) {
+  .vertical-timeline-element-icon .centered-svg-icon {
+    width: 32px;
+    height: 32px;
+    margin-left: -16px;
+    margin-top: -16px;
+  }
+}
