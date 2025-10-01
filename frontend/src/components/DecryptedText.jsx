@@ -32,7 +32,7 @@ export default function DecryptedText({
   animateOn = 'hover',
   ...props
 }) {
-  const [displayText, setDisplayText] = useState(text);
+  const [displayText, setDisplayText] = useState('');
   const [isHovering, setIsHovering] = useState(false);
   const [isScrambling, setIsScrambling] = useState(false);
   const [revealedIndices, setRevealedIndices] = useState(new Set());
@@ -137,7 +137,7 @@ export default function DecryptedText({
           }
         });
       }, speed);
-    } else {
+    } else if (hasAnimated) {
       setDisplayText(text);
       setRevealedIndices(new Set());
       setIsScrambling(false);
@@ -188,7 +188,13 @@ export default function DecryptedText({
       : {};
 
   return (
-    <motion.span className={parentClassName} ref={containerRef} style={styles.wrapper} {...hoverProps} {...props}>
+    <motion.span
+      className={parentClassName}
+      ref={containerRef}
+      style={{ ...styles.wrapper, visibility: hasAnimated ? 'visible' : 'hidden' }}
+      {...hoverProps}
+      {...props}
+    >
       <span style={styles.srOnly}>{displayText}</span>
 
       <span aria-hidden="true">

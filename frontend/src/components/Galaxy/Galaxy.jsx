@@ -131,6 +131,7 @@ export function Galaxy() {
       },
       onComplete: () => {
         endTransition(true);
+        completeFade();
       }
     });
 
@@ -164,17 +165,17 @@ export function Galaxy() {
     <group dispose={null} ref={galaxyRef} position={[0, -5.0, 0]}>
       <light
         position={[0, 0, 0]}
-        intensity={0.5}
+        intensity={0.2}
       />
-      <ambientLight intensity={0.5} />
+      <ambientLight intensity={0.1} />
 
-      <Points scale={0.05} positions={positions} colors={colors}>
+      <Points scale={0.065} positions={positions} colors={colors}>
         <pointsMaterial
           transparent
           depthWrite={false}
           vertexColors
           opacity={1}
-          size={0.025}
+          size={0.01}
           sizeAttenuation={true}
           blending={2} // THREE.AdditiveBlending
         />

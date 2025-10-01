@@ -49,8 +49,8 @@ function App() {
           <Selection>
             <EffectComposer multisampling={0} disableNormalPass={true}>
               <Bloom
-                intensity={0.75}
-                luminanceThreshold={0.2}
+                intensity={0.3}
+                luminanceThreshold={0.5}
                 luminanceSmoothing={0.9}
                 height={512}
               />
