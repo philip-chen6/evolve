@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Slab } from 'react-loading-indicators';
 import './LoadingScreen.css';
 import { useSceneStore } from '../core/SceneManager';
 
@@ -7,13 +8,15 @@ const LoadingScreen = () => {
   const { setIsLoading, setIntroComplete } = useSceneStore();
 
   useEffect(() => {
+    // Trigger the intro animations for the main page content
     const introTimer = setTimeout(() => {
       setIntroComplete(true);
-    }, 3000); // Start UI animations as the fade-out begins
+    }, 3000); // Sync with the fade-out delay
 
+    // Remove the loading screen component from the DOM
     const loadingTimer = setTimeout(() => {
       setIsLoading(false);
-    }, 4500); // Remove loading screen after the longer fade-out
+    }, 4000); // Keep the loading screen for 4 seconds
 
     return () => {
       clearTimeout(introTimer);
@@ -26,16 +29,9 @@ const LoadingScreen = () => {
       className="loading-screen"
       initial={{ opacity: 1 }}
       animate={{ opacity: 0 }}
-      transition={{ duration: 0.95, delay: 3.0 }}
+      transition={{ duration: 1, delay: 3 }} // Fade out after 3 seconds
     >
-      <div className="loading-bar-container">
-        <motion.div
-          className="loading-bar"
-          initial={{ width: '0%' }}
-          animate={{ width: '100%' }}
-          transition={{ duration: 2.5, delay: 0.5, ease: 'easeInOut' }}
-        />
-      </div>
+      <Slab color="white" size="medium" />
     </motion.div>
   );
 };
