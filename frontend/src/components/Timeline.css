@@ -1,8 +1,3 @@
-@keyframes timeline-fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
 .timeline-container-background {
   position: fixed;
   top: 0;
@@ -14,85 +9,101 @@
   animation: timeline-fade-in 1s ease-out;
 }
 
-/* Custom Spinner */
-.spinner-container {
+@keyframes timeline-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.timeline-animated-content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 101;
+}
+
+/* The single element that animates through all stages */
+.timeline-spinner {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 20;
-}
-
-.spinner-grow {
-  display: inline-block;
   width: 2rem;
   height: 2rem;
-  vertical-align: text-bottom;
-  background-color: currentColor;
   border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 120; /* Above all other timeline elements */
+  background-color: #000;
+}
+
+/* Stage 1: Loading (the spinner) */
+.timeline-spinner.loading {
   opacity: 0;
-  animation: spinner-grow 0.75s linear infinite;
-  color: #000;
+  animation: spinner-pulse 1.5s ease-in-out infinite;
 }
 
-@keyframes spinner-grow {
-  0% {
-    transform: scale(0);
+@keyframes spinner-pulse {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+  50% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+}
+
+/* Stage 2: Loaded (solid, fully opaque dot) */
+.timeline-spinner.loaded {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Stage 3: Moving Up */
+.timeline-spinner.moving {
+  opacity: 1;
+  animation: move-spinner-up 1s ease-in-out forwards;
+}
+
+@keyframes move-spinner-up {
+  to {
+    top: 20vh; /* Final position */
+    transform: translate(-50%, -50%);
   }
-  50% {
-    opacity: 1;
-    transform: none;
+}
+
+/* Stage 4: Finished (dot is in final position, line protrudes) */
+.timeline-spinner.finished {
+  top: 20vh;
+  opacity: 1;
+  /* The line grows from the bottom of the dot */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%; /* Start from the middle of the dot */
+    left: 50%;
+    width: 4px;
+    height: 100vh; /* Long enough to cover the screen */
+    background-color: #000;
+    transform: translateX(-50%) scaleY(0);
+    transform-origin: top;
+    animation: line-protrude 1.5s ease-out forwards;
+    z-index: -1; /* Place line behind the dot */
   }
 }
 
-/* Intro Animation */
-.timeline-intro-animation {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 10;
+@keyframes line-protrude {
+  to { transform: translateX(-50%) scaleY(1); }
 }
 
-.intro-dot {
-  width: 2rem;
-  height: 2rem;
-  background-color: #000;
-  border-radius: 50%;
-  animation: dot-appear 0.2s forwards;
-}
-
-@keyframes dot-appear {
-  from { opacity: 0; transform: scale(0.8); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-.intro-line {
-  width: 4px;
-  height: 50vh;
-  background-color: #000;
-  transform: scaleY(0);
-  transform-origin: top;
-  animation: line-grow-intro 1.5s ease-out forwards;
-  animation-delay: 0.2s;
-}
-
-@keyframes line-grow-intro {
-  to { transform: scaleY(1); }
-}
-
-/* Final Scrollable Timeline */
+/* The scrollable content area */
 .timeline-scroll-container {
+  position: absolute;
+  top: 0;
+  left: 0;
   height: 100vh;
   width: 100%;
   overflow-y: scroll;
   opacity: 0;
   animation: container-fade-in 0.5s forwards;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+  animation-delay: 1s; /* Delay until after the dot has moved */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
 }
 
 @keyframes container-fade-in {
@@ -104,28 +115,19 @@
   width: 80%;
   max-width: 800px;
   margin: 0 auto;
-  padding-top: 50vh;
+  padding-top: 20vh; /* Align with the final dot position */
   padding-bottom: 50vh;
-}
-
-.static-line {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background-color: #000;
-  transform: translateX(-50%);
 }
 
 .timeline-item-wrapper {
   position: relative;
   margin-bottom: 50px;
+  padding-left: 30px; /* Space for the dot */
 }
 
 .timeline-item-dot {
   position: absolute;
-  left: 50%;
+  left: -10px; /* Align with the main line */
   top: 5px;
   width: 20px;
   height: 20px;
@@ -136,16 +138,5 @@
 }
 
 .timeline-item-content {
-  position: relative;
-  width: calc(50% - 40px);
-  padding: 0 20px;
-}
-
-.timeline-item-wrapper:nth-child(odd) .timeline-item-content {
-  left: 0;
-  text-align: right;
-}
-
-.timeline-item-wrapper:nth-child(even) .timeline-item-content {
-  left: 50%;
+  text-align: left;
 }
