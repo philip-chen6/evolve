@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './GlassSearchBar.css';
 import DecryptedText from './DecryptedText';
+import { useSceneStore } from '../core/SceneManager';
 
 const queries = [
   "large language models",
@@ -13,6 +14,7 @@ const GlassSearchBar = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const glassRef = useRef(null);
   const inputRef = useRef(null);
+  const { submitSearch } = useSceneStore();
 
   const handleFocus = () => setShowSuggestions(true);
   const handleBlur = (e) => {
@@ -28,6 +30,13 @@ const GlassSearchBar = () => {
     setInputValue(query);
     setShowSuggestions(false);
     inputRef.current?.focus();
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (inputValue.trim() !== '') {
+      submitSearch();
+    }
   };
 
   useEffect(() => {
@@ -59,9 +68,10 @@ const GlassSearchBar = () => {
 
   return (
     <div className="glass-search-container">
-      <div
+      <form
         className="glass-search"
         ref={glassRef}
+        onSubmit={handleSubmit}
       >
         <div className="glass-filter" />
         <div className="glass-overlay" />
@@ -78,6 +88,11 @@ const GlassSearchBar = () => {
               onChange={(e) => setInputValue(e.target.value)}
               onFocus={handleFocus}
               onBlur={handleBlur}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleSubmit(e);
+                }
+              }}
             />
             {!inputValue && (
               <div className="placeholder">
@@ -102,7 +117,7 @@ const GlassSearchBar = () => {
             </div>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

@@ -86,8 +86,8 @@ export function Galaxy() {
     // }
   })
 
-  function zoomInGalaxyFunction(backwards = false) {
-    setupZoomCamera(camera, 'galaxy', backwards, {
+  function zoomInGalaxyFunction() {
+    setupZoomCamera(camera, 'galaxy', false, {
       getZoomOutCameraData,
       setZoomOutCameraData,
       endTransition
@@ -125,10 +125,15 @@ export function Galaxy() {
 
         camera.updateProjectionMatrix();
       },
+      onComplete: () => {
+        endTransition(true);
+      }
     });
 
     tl.to(tweenObj, {
       progress: 1,
+      duration: 2,
+      ease: "power2.inOut",
       onUpdate: function () {
         let dynamicTarget = (() => {
           const pos = new Vector3();
@@ -143,26 +148,12 @@ export function Galaxy() {
         camera.updateProjectionMatrix();
       }
     });
-
-    const animation = createNavigationAnimation({
-      sceneKey: sceneKey,
-      timeline: tl,
-      onComplete: endTransition,
-      backwards: backwards,
-      zoomDirections: { in: true, out: false },
-    });
-
-    return () => {
-      animation.cleanup();
-    };
   }
 
   useNavigation({
     sceneKey: sceneKey,
     zoomFunction: zoomInGalaxyFunction,
     isVisible: sceneVisible,
-    zoomDirection: zoomDirection,
-    getZoomOutCameraData: getZoomOutCameraData
   });
 
   return (

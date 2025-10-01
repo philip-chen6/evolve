@@ -12,6 +12,7 @@ export const useSceneStore = create((set, get) => ({
   sceneZoomed: null,
 
   isFullscreenActive: false,
+  isSearchSubmitted: false,
 
   // set default zoom out camera data for all scenes
   // used to save before zooming in and set back after zooming out
@@ -29,6 +30,9 @@ export const useSceneStore = create((set, get) => ({
   setFullscreenActive: (isActive) => {
     set({ isFullscreenActive: isActive });
   },
+
+  submitSearch: () => set({ isSearchSubmitted: true }),
+  resetSearch: () => set({ isSearchSubmitted: false }),
 
   getZoomOutCameraData: (scene) => {
     const { zoomOutCameraData } = get();
