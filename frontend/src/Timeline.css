@@ -1,0 +1,4 @@
+body.timeline-active {
+  background-color: #ffffff;
+  overflow: auto;
+}
