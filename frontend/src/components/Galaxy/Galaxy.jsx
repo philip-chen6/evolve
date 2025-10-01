@@ -19,6 +19,7 @@ export function Galaxy() {
     getZoomOutCameraData, setZoomOutCameraData,
     endTransition,
     startFadeToBlack,
+    setOverlayColor,
   } = useSceneStore();
 
   const sceneKey = 'galaxy'
@@ -88,6 +89,7 @@ export function Galaxy() {
   })
 
   function zoomInGalaxyFunction() {
+    setOverlayColor('#ffffff');
     startFadeToBlack();
     setupZoomCamera(camera, 'galaxy', false, {
       getZoomOutCameraData,

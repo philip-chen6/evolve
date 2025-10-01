@@ -8,18 +8,23 @@ import DecryptedText from "./components/DecryptedText";
 import SplitText from "./components/Text";
 import GlassSearchBar from "./components/GlassSearchBar";
 import Vignette from "./components/Vignette";
-import BlackOverlay from "./components/BlackOverlay";
+import Overlay from "./components/Overlay";
+import LoadingScreen from "./components/LoadingScreen";
 import {
   EffectComposer,
   Bloom,
   Selection,
   Select,
 } from "@react-three/postprocessing";
+import { useSceneStore } from "./core/SceneManager";
 
 function App() {
+  const { isLoading, isIntroComplete } = useSceneStore();
+
   return (
     <div className="component-container">
-      <BlackOverlay />
+      {isLoading && <LoadingScreen />}
+      <Overlay />
       {/* Layer 1: Original interactive galaxy background */}
       <Galaxy
         mouseRepulsion={true}
@@ -31,7 +36,7 @@ function App() {
         repulsionStrength={0.5}
         twinkleIntensity={0.4}
         rotationSpeed={0.1}
-        animateIn={true}
+        animateIn={false}
       />
 
       {/* Layer 2: New static galaxy, rendered on a transparent canvas */}
@@ -44,10 +49,10 @@ function App() {
           <Selection>
             <EffectComposer multisampling={0} disableNormalPass={true}>
               <Bloom
-                intensity={1.5}
-                luminanceThreshold={0.1}
+                intensity={0.75}
+                luminanceThreshold={0.2}
                 luminanceSmoothing={0.9}
-                height={1024}
+                height={512}
               />
             </EffectComposer>
             <Select enabled>
@@ -62,19 +67,28 @@ function App() {
       <div className="content-container">
         <header className="page-header">
           <h1 className="title">
-            <DecryptedText text="evolve" animateOn="view" sequential={true} speed={150} />
+            {isIntroComplete && (
+              <DecryptedText
+                text="evolve"
+                animateOn="view"
+                sequential={true}
+                speed={150}
+              />
+            )}
           </h1>
-          <SplitText
-            text="generate a timeline of key papers for any topic."
-            className="subhead"
-            tag="p"
-            delay={100}
-            duration={0.6}
-            ease="power3.out"
-            splitType="words"
-            from={{ opacity: 0, y: 20 }}
-            to={{ opacity: 1, y: 0 }}
-          />
+          {isIntroComplete && (
+            <SplitText
+              text="generate a timeline of key papers for any topic."
+              className="subhead"
+              tag="p"
+              delay={100}
+              duration={0.6}
+              ease="power3.out"
+              splitType="words"
+              from={{ opacity: 0, y: 20 }}
+              to={{ opacity: 1, y: 0 }}
+            />
+          )}
         </header>
         <div className="search-bar-wrapper">
           <GlassSearchBar />

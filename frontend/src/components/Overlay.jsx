@@ -1,21 +1,21 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import './BlackOverlay.css';
+import './Overlay.css';
 import { useSceneStore } from '../core/SceneManager';
 
-const BlackOverlay = () => {
-  const { isFadingToBlack, completeFade } = useSceneStore();
+const Overlay = () => {
+  const { isFadingToBlack, completeFade, overlayColor } = useSceneStore();
 
   return (
     <motion.div
-      className="black-overlay"
+      className="overlay"
+      style={{ backgroundColor: overlayColor }}
       initial={{ opacity: 1 }}
       animate={{ opacity: isFadingToBlack ? 1 : 0 }}
       transition={{
-        duration: isFadingToBlack ? 1.0 : 1,
+        duration: isFadingToBlack ? 1.0 : 2.5,
         delay: isFadingToBlack ? 1.0 : 0,
       }}
-      style={{ pointerEvents: isFadingToBlack ? 'auto' : 'none' }}
       onAnimationComplete={() => {
         if (isFadingToBlack) {
           completeFade();
@@ -25,4 +25,4 @@ const BlackOverlay = () => {
   );
 };
 
-export default BlackOverlay;
+export default Overlay;
