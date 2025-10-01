@@ -12,8 +12,8 @@ const BlackOverlay = () => {
       initial={{ opacity: 1 }}
       animate={{ opacity: isFadingToBlack ? 1 : 0 }}
       transition={{
-        duration: isFadingToBlack ? 1.5 : 1,
-        delay: isFadingToBlack ? 0.69 : 0,
+        duration: isFadingToBlack ? 1.0 : 1,
+        delay: isFadingToBlack ? 1.0 : 0,
       }}
       style={{ pointerEvents: isFadingToBlack ? 'auto' : 'none' }}
       onAnimationComplete={() => {
