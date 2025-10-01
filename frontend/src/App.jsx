@@ -34,6 +34,11 @@ function App() {
   }, [isFadeComplete, overlayColor]);
 
   useEffect(() => {
+    // On initial load, if the hash is #timeline, remove it to go to the main page.
+    if (window.location.hash === '#timeline') {
+      window.history.replaceState(null, '', ' ');
+    }
+
     const handleHashChange = () => {
       setIsTimelinePage(window.location.hash === '#timeline');
     };
