@@ -1,5 +1,4 @@
 import "./App.css";
-import "./Timeline.css";
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useState, useMemo, useEffect } from "react";
 import { NoToneMapping } from "three";
@@ -18,7 +17,6 @@ import {
   Select,
 } from "@react-three/postprocessing";
 import { useSceneStore } from "./core/SceneManager";
-import Waves from "./components/Waves";
 import Timeline from "./components/Timeline";
 
 const galaxyFocal = [0.5, 0.25];
@@ -37,25 +35,17 @@ function App() {
 
   useEffect(() => {
     const handleHashChange = () => {
-      const isTimeline = window.location.hash === '#timeline';
-      setIsTimelinePage(isTimeline);
-      if (isTimeline) {
-        document.body.classList.add('timeline-active');
-      } else {
-        document.body.classList.remove('timeline-active');
-      }
+      setIsTimelinePage(window.location.hash === '#timeline');
     };
 
     window.addEventListener('hashchange', handleHashChange);
-    // Initial check in case the page is loaded with the hash
-    handleHashChange();
+    handleHashChange(); // Initial check
 
     return () => {
       window.removeEventListener('hashchange', handleHashChange);
-      document.body.classList.remove('timeline-active'); // Cleanup on component unmount
     };
   }, []);
-
+  
   const handleMouseMove = (event) => {
     const { clientX, clientY, currentTarget } = event;
     const { left, top, width, height } = currentTarget.getBoundingClientRect();
@@ -92,24 +82,7 @@ function App() {
   );
 
   if (isTimelinePage) {
-    return (
-      <>
-        <Waves
-          lineColor="rgba(0, 0, 0, 0.2)"
-          backgroundColor="transparent"
-          waveSpeedX={0.02}
-          waveSpeedY={0.01}
-          waveAmpX={40}
-          waveAmpY={20}
-          friction={0.9}
-          tension={0.01}
-          maxCursorMove={120}
-          xGap={12}
-          yGap={36}
-        />
-        <Timeline />
-      </>
-    );
+    return <Timeline />;
   }
 
   return (
@@ -171,5 +144,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;

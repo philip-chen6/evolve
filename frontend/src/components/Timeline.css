@@ -1,27 +1,102 @@
+@keyframes timeline-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.timeline-container-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  z-index: 100;
+  animation: timeline-fade-in 1s ease-out;
+}
+
+/* Custom Spinner */
 .spinner-container {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 10;
-  /* Default spinner size is 2rem */
-  width: 2rem;
-  height: 2rem;
+  z-index: 20;
 }
 
+.spinner-grow {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: text-bottom;
+  background-color: currentColor;
+  border-radius: 50%;
+  opacity: 0;
+  animation: spinner-grow 0.75s linear infinite;
+  color: #000;
+}
+
+@keyframes spinner-grow {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Intro Animation */
+.timeline-intro-animation {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+}
+
+.intro-dot {
+  width: 2rem;
+  height: 2rem;
+  background-color: #000;
+  border-radius: 50%;
+  animation: dot-appear 0.2s forwards;
+}
+
+@keyframes dot-appear {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.intro-line {
+  width: 4px;
+  height: 50vh;
+  background-color: #000;
+  transform: scaleY(0);
+  transform-origin: top;
+  animation: line-grow-intro 1.5s ease-out forwards;
+  animation-delay: 0.2s;
+}
+
+@keyframes line-grow-intro {
+  to { transform: scaleY(1); }
+}
+
+/* Final Scrollable Timeline */
 .timeline-scroll-container {
   height: 100vh;
   width: 100%;
   overflow-y: scroll;
-  position: relative;
   opacity: 0;
-  transition: opacity 0.5s ease-in;
+  animation: container-fade-in 0.5s forwards;
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
   mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
 }
 
-.timeline-scroll-container.visible {
-  opacity: 1;
+@keyframes container-fade-in {
+  to { opacity: 1; }
 }
 
 .timeline-content-wrapper {
@@ -29,76 +104,23 @@
   width: 80%;
   max-width: 800px;
   margin: 0 auto;
-  /* Pushes the start of the timeline down to the vertical center */
   padding-top: 50vh;
-  padding-bottom: 50vh; /* Ensures scrollability */
+  padding-bottom: 50vh;
 }
 
-/* This node is positioned at the very top of the content wrapper, which is centered via padding */
-.timeline-start-node {
+.static-line {
   position: absolute;
-  top: 50vh;
   left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.timeline-start-dot {
-  width: 2rem; /* Same size as spinner */
-  height: 2rem;
-  background-color: #000;
-  border-radius: 50%;
-  z-index: 5;
-}
-
-.timeline-animated-line {
+  top: 0;
+  bottom: 0;
   width: 4px;
   background-color: #000;
-  transform: scaleY(0);
-  transform-origin: top;
-  height: 100vh; /* Long enough to cover the screen */
-}
-
-.timeline-scroll-container.visible .timeline-animated-line {
-  animation: line-grow 1.5s ease-out forwards;
-  animation-delay: 0.2s;
-}
-
-@keyframes line-grow {
-  to {
-    transform: scaleY(1);
-  }
+  transform: translateX(-50%);
 }
 
 .timeline-item-wrapper {
   position: relative;
   margin-bottom: 50px;
-  opacity: 0;
-}
-
-.timeline-scroll-container.visible .timeline-item-wrapper {
-    animation: item-fade-in 0.5s ease-out forwards;
-}
-
-.timeline-scroll-container.visible .timeline-item-wrapper:nth-of-type(1) { animation-delay: 1s; }
-.timeline-scroll-container.visible .timeline-item-wrapper:nth-of-type(2) { animation-delay: 1.5s; }
-.timeline-scroll-container.visible .timeline-item-wrapper:nth-of-type(3) { animation-delay: 2s; }
-.timeline-scroll-container.visible .timeline-item-wrapper:nth-of-type(4) { animation-delay: 2.5s; }
-.timeline-scroll-container.visible .timeline-item-wrapper:nth-of-type(5) { animation-delay: 3s; }
-
-
-@keyframes item-fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .timeline-item-dot {
@@ -110,6 +132,7 @@
   background-color: #000;
   border-radius: 50%;
   transform: translateX(-50%);
+  z-index: 5;
 }
 
 .timeline-item-content {

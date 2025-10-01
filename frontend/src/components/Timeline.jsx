@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Spinner } from 'react-bootstrap';
+import Waves from './Waves';
 import './Timeline.css';
 
 const timelineData = [
@@ -25,48 +25,73 @@ const timelineData = [
     },
 ];
 
+// A simple, self-contained spinner component
+const SimpleSpinner = () => (
+    <div className="spinner-container">
+        <div className="spinner-grow" />
+    </div>
+);
+
 const Timeline = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isAnimating, setIsAnimating] = useState(false);
+    const [isAnimationComplete, setIsAnimationComplete] = useState(false);
 
     useEffect(() => {
         const loadingTimer = setTimeout(() => {
             setIsLoading(false);
-            // Start animation shortly after loading is false
+            setIsAnimating(true);
             const animationTimer = setTimeout(() => {
-                setIsAnimating(true);
-            }, 50); // Short delay for smooth transition
+                setIsAnimating(false);
+                setIsAnimationComplete(true);
+            }, 2000); // Duration of the intro line animation
             return () => clearTimeout(animationTimer);
-        }, 2000); // 2 seconds loading time
+        }, 2000); // Duration of the loading spinner
 
         return () => clearTimeout(loadingTimer);
     }, []);
 
     return (
-        <>
-            {isLoading && (
-                <div className="spinner-container">
-                    <Spinner animation="grow" variant="dark" />
+        <div className="timeline-container-background">
+            <Waves
+                lineColor="rgba(0, 0, 0, 0.2)"
+                backgroundColor="transparent"
+                waveSpeedX={0.02}
+                waveSpeedY={0.01}
+                waveAmpX={40}
+                waveAmpY={20}
+                friction={0.9}
+                tension={0.01}
+                maxCursorMove={120}
+                xGap={12}
+                yGap={36}
+            />
+            {isLoading && <SimpleSpinner />}
+
+            {isAnimating && (
+                <div className="timeline-intro-animation">
+                    <div className="intro-dot" />
+                    <div className="intro-line" />
                 </div>
             )}
-            <div className={`timeline-scroll-container ${isAnimating ? 'visible' : ''}`}>
-                <div className="timeline-content-wrapper">
-                    <div className="timeline-start-node">
-                        <div className="timeline-start-dot" />
-                        <div className="timeline-animated-line" />
-                    </div>
-                    {timelineData.map((item, index) => (
-                        <div key={index} className="timeline-item-wrapper">
-                            <div className="timeline-item-dot" />
-                            <div className="timeline-item-content">
-                                <h3>{item.title}</h3>
-                                <p>{item.summary}</p>
+
+            {isAnimationComplete && (
+                <div className="timeline-scroll-container">
+                    <div className="timeline-content-wrapper">
+                        <div className="static-line" />
+                        {timelineData.map((item, index) => (
+                            <div key={index} className="timeline-item-wrapper">
+                                <div className="timeline-item-dot" />
+                                <div className="timeline-item-content">
+                                    <h3>{item.title}</h3>
+                                    <p>{item.summary}</p>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
-            </div>
-        </>
+            )}
+        </div>
     );
 };
 
