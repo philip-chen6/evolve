@@ -11,7 +11,7 @@ const LoadingScreen = () => {
     // Trigger the intro animations for the main page content
     const introTimer = setTimeout(() => {
       setIntroComplete(true);
-    }, 3000); // Sync with the fade-out delay
+    }, 2300); // Sync with the fade-out delay
 
     // Remove the loading screen component from the DOM
     const loadingTimer = setTimeout(() => {

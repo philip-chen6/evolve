@@ -32,12 +32,23 @@ export default function DecryptedText({
   animateOn = 'hover',
   ...props
 }) {
-  const [displayText, setDisplayText] = useState(text);
   const [isHovering, setIsHovering] = useState(false);
   const [isScrambling, setIsScrambling] = useState(false);
   const [revealedIndices, setRevealedIndices] = useState(new Set());
   const [hasAnimated, setHasAnimated] = useState(false);
   const containerRef = useRef(null);
+
+  const scrambleText = (textToScramble) => {
+    const availableChars = useOriginalCharsOnly
+      ? Array.from(new Set(textToScramble.split(''))).filter(char => char !== ' ')
+      : characters.split('');
+    return textToScramble
+      .split('')
+      .map(char => (char === ' ' ? ' ' : availableChars[Math.floor(Math.random() * availableChars.length)]))
+      .join('');
+  };
+
+  const [displayText, setDisplayText] = useState(() => scrambleText(text));
 
   useEffect(() => {
     let interval;
@@ -137,7 +148,7 @@ export default function DecryptedText({
           }
         });
       }, speed);
-    } else {
+    } else if (hasAnimated) {
       setDisplayText(text);
       setRevealedIndices(new Set());
       setIsScrambling(false);
@@ -146,7 +157,7 @@ export default function DecryptedText({
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isHovering, text, speed, maxIterations, sequential, revealDirection, characters, useOriginalCharsOnly]);
+  }, [isHovering, text, speed, maxIterations, sequential, revealDirection, characters, useOriginalCharsOnly, hasAnimated]);
 
   useEffect(() => {
     if (animateOn !== 'view' && animateOn !== 'both') return;
@@ -182,7 +193,12 @@ export default function DecryptedText({
   const hoverProps =
     animateOn === 'hover' || animateOn === 'both'
       ? {
-          onMouseEnter: () => setIsHovering(true),
+          onMouseEnter: () => {
+            if (!hasAnimated) {
+              setHasAnimated(true);
+            }
+            setIsHovering(true);
+          },
           onMouseLeave: () => setIsHovering(false)
         }
       : {};
