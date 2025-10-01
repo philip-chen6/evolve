@@ -25,11 +25,15 @@ const galaxyRotation = [1.0, 0.0];
 function App() {
   const { isLoading, isIntroComplete, isFadeComplete, overlayColor, searchQuery } = useSceneStore();
   const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
-  const [isTimelinePage, setIsTimelinePage] = useState(window.location.hash.startsWith('#timeline'));
+  const [isTimelinePage, setIsTimelinePage] = useState(false);
 
-  
-
-  
+  useEffect(() => {
+    // On initial application load, if there is any hash, force a hard reload to the base URL.
+    // This runs only once and ensures any "restart" brings the user to the clean homepage.
+    if (window.location.hash) {
+      window.location.href = '/';
+    }
+  }, []);
 
   useEffect(() => {
     const handleHashChange = () => {

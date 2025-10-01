@@ -151,7 +151,7 @@ const Timeline = () => {
       try {
         const prompt = `Generate a timeline of key papers and events for the topic: ${promptTopic}. Provide 6 events. For each event, give me a title, a one-sentence summary, and the year. Return the data as a valid JSON array of objects, where each object has "id", "title", "summary", and "date" keys. Ensure the JSON is clean and contains only the array.`;
         
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`, {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite-preview-09-2025:generateContent?key=${API_KEY}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }),
