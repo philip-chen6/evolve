@@ -131,7 +131,6 @@ export function Galaxy() {
       },
       onComplete: () => {
         endTransition(true);
-        completeFade();
       }
     });
 

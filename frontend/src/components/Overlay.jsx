@@ -13,8 +13,8 @@ const Overlay = () => {
       initial={{ opacity: 1 }}
       animate={{ opacity: isFadingToBlack ? 1 : 0 }}
       transition={{
-        duration: isFadingToBlack ? 0.75 : 2.5,
-        delay: isFadingToBlack ? 1.34 : 0,
+        duration: isFadingToBlack ? 1.25 : 3.5,
+        delay: isFadingToBlack ? 0.85 : 0,
       }}
       onAnimationComplete={() => {
         if (isFadingToBlack) {

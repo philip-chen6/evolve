@@ -9,11 +9,11 @@ const LoadingScreen = () => {
   useEffect(() => {
     const introTimer = setTimeout(() => {
       setIntroComplete(true);
-    }, 3000); // Start UI animations 0.5s early
+    }, 3000); // Start UI animations as the fade-out begins
 
     const loadingTimer = setTimeout(() => {
       setIsLoading(false);
-    }, 3500); // Remove loading screen after fade-out
+    }, 4500); // Remove loading screen after the longer fade-out
 
     return () => {
       clearTimeout(introTimer);
@@ -26,7 +26,7 @@ const LoadingScreen = () => {
       className="loading-screen"
       initial={{ opacity: 1 }}
       animate={{ opacity: 0 }}
-      transition={{ duration: 0.5, delay: 3.0 }}
+      transition={{ duration: 0.95, delay: 3.0 }}
     >
       <div className="loading-bar-container">
         <motion.div
