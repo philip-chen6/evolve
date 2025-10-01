@@ -125,7 +125,7 @@ function App() {
           <h1 className="title">
             {isIntroComplete && (
               <DecryptedText
-                text="evolve"
+                text="evolve."
                 animateOn="view"
                 sequential={true}
                 speed={150}
