@@ -126,7 +126,15 @@ const TimelineView = ({ timelineData, promptTopic }) => {
                 </svg>
               }
             >
-              <h3 className="vertical-timeline-element-title">{item.title}</h3>
+              <h3 className="vertical-timeline-element-title">
+                {item.url ? (
+                  <a href={item.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
+                    {item.title}
+                  </a>
+                ) : (
+                  item.title
+                )}
+              </h3>
               <p>{item.summary}</p>
             </VerticalTimelineElement>
           ))}
@@ -149,12 +157,15 @@ const Timeline = () => {
   useEffect(() => {
     const fetchTimelineData = async () => {
       try {
-        const prompt = `Generate a timeline of key papers and events for the topic: ${promptTopic}. Provide 6 events. For each event, give me a title, a one-sentence summary, and the year. Return the data as a valid JSON array of objects, where each object has "id", "title", "summary", and "date" keys. Ensure the JSON is clean and contains only the array.`;
+        const prompt = `Generate a timeline of key papers and events for the topic: ${promptTopic}. Provide 6 events. For each event, give me a title, a one-sentence summary, the year, and a URL to the paper or a relevant resource. Return the data as a valid JSON array of objects, where each object has "id", "title", "summary", "date", and "url" keys. Ensure the JSON is clean and contains only the array.`;
         
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite-preview-09-2025:generateContent?key=${API_KEY}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }),
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            tools: [{ "googleSearch": {} }]
+          }),
         });
 
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);

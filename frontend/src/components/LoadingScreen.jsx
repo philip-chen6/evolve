@@ -29,9 +29,15 @@ const LoadingScreen = () => {
       className="loading-screen"
       initial={{ opacity: 1 }}
       animate={{ opacity: 0 }}
-      transition={{ duration: 1, delay: 3 }} // Fade out after 3 seconds
+      transition={{ duration: 1, delay: 2.5 }} // Fade out background after 2.5 seconds
     >
-      <Slab color="white" size="medium" />
+      <motion.div
+        initial={{ opacity: 1 }}
+        animate={{ opacity: 0 }}
+        transition={{ duration: 0.5, delay: 2 }} // Fade out slab after 2 seconds
+      >
+        <Slab color="white" size="medium" />
+      </motion.div>
     </motion.div>
   );
 };

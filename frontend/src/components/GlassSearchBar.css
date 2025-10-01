@@ -9,7 +9,7 @@
 
 .glass-search {
   --bg-color: rgba(255, 255, 255, 0.3);
-  --highlight: rgba(255, 255, 255, 0.85);
+  --highlight: rgba(255, 255, 255, 0.4);
   --text: #ffffff;
   --input-bg: rgba(255, 255, 255, 0.15);
   --input-border: rgba(255, 255, 255, 0.4);
