@@ -157,7 +157,7 @@ const Timeline = () => {
   useEffect(() => {
     const fetchTimelineData = async () => {
       try {
-        const prompt = `Generate a timeline of key papers and events for the topic: ${promptTopic}. Provide 6 events, and for the final event, make it about the present day and current ongoing research. For each event, give me a title, a one-sentence summary, the year, and a URL to the paper or a relevant resource. Return the data as a valid JSON array of objects, where each object has "id", "title", "summary", "date", and "url" keys. Ensure the JSON is clean and contains only the array.`;
+        const prompt = `Generate a timeline of key papers and events for the topic: ${promptTopic}. Provide 6-8 events, and for the final event, make it about the present day and current ongoing research. For each event, give me a title, a one-sentence summary, the year, and a URL to the paper or a relevant resource. Return the data as a valid JSON array of objects, where each object has "id", "title", "summary", "date", and "url" keys. Ensure the JSON is clean and contains only the array.`;
         
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite-preview-09-2025:generateContent?key=${API_KEY}`, {
           method: 'POST',

@@ -6,7 +6,7 @@ import { useSceneStore } from '../core/SceneManager';
 const queries = [
   "large language models",
   "graph algorithms",
-  "gene editing",
+  "quantum computing",
 ].map(q => q.toLowerCase());
 
 const GlassSearchBar = () => {
