@@ -9,6 +9,12 @@ import SplitText from "./components/Text";
 import GlassSearchBar from "./components/GlassSearchBar";
 import Vignette from "./components/Vignette";
 import BlackOverlay from "./components/BlackOverlay";
+import {
+  EffectComposer,
+  Bloom,
+  Selection,
+  Select,
+} from "@react-three/postprocessing";
 
 function App() {
   return (
@@ -35,7 +41,19 @@ function App() {
         gl={{ alpha: true, toneMapping: NoToneMapping }} // Ensure transparency
       >
         <Suspense fallback={null}>
-          <GalaxyScene />
+          <Selection>
+            <EffectComposer multisampling={0} disableNormalPass={true}>
+              <Bloom
+                intensity={1.5}
+                luminanceThreshold={0.1}
+                luminanceSmoothing={0.9}
+                height={1024}
+              />
+            </EffectComposer>
+            <Select enabled>
+              <GalaxyScene />
+            </Select>
+          </Selection>
         </Suspense>
       </Canvas>
 

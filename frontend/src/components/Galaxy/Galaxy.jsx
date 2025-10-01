@@ -168,13 +168,13 @@ export function Galaxy() {
 
       <Points scale={0.05} positions={positions} colors={colors}>
         <pointsMaterial
-          map={starTexture}
           transparent
           depthWrite={false}
           vertexColors
           opacity={1}
-          depthTest
-          size={0.01}
+          size={0.025}
+          sizeAttenuation={true}
+          blending={2} // THREE.AdditiveBlending
         />
       </Points>
 
@@ -184,7 +184,7 @@ export function Galaxy() {
           position={GALAXY.SOLAR_SYSTEM_STAR.INIT_POSITION}
         >
           <sphereGeometry args={GALAXY.SOLAR_SYSTEM_STAR.INIT_SIZE} />
-          <meshBasicMaterial map={starTexture} color={GALAXY.SOLAR_SYSTEM_STAR.COLOR} />
+          <meshStandardMaterial map={starTexture} color={GALAXY.SOLAR_SYSTEM_STAR.COLOR} emissive={0xffffff} emissiveIntensity={2} />
         </mesh>
       </group>
     </group>

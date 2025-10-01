@@ -15,6 +15,7 @@ export const useSceneStore = create((set, get) => ({
   isSearchSubmitted: false,
   isFadingToBlack: false,
   isFadeComplete: false,
+  overlayColor: '#000000',
 
   // set default zoom out camera data for all scenes
   // used to save before zooming in and set back after zooming out
@@ -35,6 +36,7 @@ export const useSceneStore = create((set, get) => ({
 
   submitSearch: () => set({ isSearchSubmitted: true }),
   startFadeToBlack: () => set({ isFadingToBlack: true }),
+  setOverlayColor: (color) => set({ overlayColor: color }),
   completeFade: () => set({ isFadeComplete: true }),
   resetSearch: () => set({ isSearchSubmitted: false }),
 
