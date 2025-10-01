@@ -27,15 +27,19 @@ const GlassSearchBar = () => {
     inputRef.current?.focus();
   };
   const handleSuggestionClick = (query) => {
-    setInputValue(query);
-    setShowSuggestions(false);
-    inputRef.current?.focus();
+    setTimeout(() => {
+      setInputValue(query);
+      setShowSuggestions(false);
+      inputRef.current?.focus();
+    }, 0);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (inputValue.trim() !== '' && !isFadingToBlack) {
       submitSearch();
+      setInputValue('');
+      setShowSuggestions(false);
     }
   };
 
@@ -108,7 +112,7 @@ const GlassSearchBar = () => {
               <h4>suggestions</h4>
               <ul>
                 {queries.map((query) => (
-                  <li key={query} onClick={() => handleSuggestionClick(query)}>
+                  <li key={query} onMouseDown={() => handleSuggestionClick(query)}>
                     <i className="fas fa-arrow-trend-up" />
                     {query}
                   </li>

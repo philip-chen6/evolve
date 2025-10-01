@@ -13,6 +13,7 @@ import BlackOverlay from "./components/BlackOverlay";
 function App() {
   return (
     <div className="component-container">
+      <BlackOverlay />
       {/* Layer 1: Original interactive galaxy background */}
       <Galaxy
         mouseRepulsion={true}
@@ -39,7 +40,6 @@ function App() {
       </Canvas>
 
       {/* Layer 3: UI Elements */}
-      <BlackOverlay />
       <Vignette />
       <div className="content-container">
         <header className="page-header">
