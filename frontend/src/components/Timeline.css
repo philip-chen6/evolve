@@ -142,12 +142,15 @@
 }
 
 .centered-svg-icon {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 60%;
-  height: 60%;
-  fill: white;
+  width: 180%;
+  height: 180%;
+  fill: #cccccc;
+}
+
+.vertical-timeline-element-icon .centered-svg-icon {
+  width: 36px;
+  height: 36px;
+  margin-left: -18px;
+  margin-top: -18px;
 }
 
