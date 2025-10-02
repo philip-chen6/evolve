@@ -38,6 +38,7 @@ const GlassSearchBar = () => {
     e.preventDefault();
     if (inputValue.trim() !== '' && !isFadingToBlack) {
       submitSearch(inputValue.trim());
+      inputRef.current?.blur(); // Dismiss keyboard
       setInputValue(''); // Clear input immediately
       setShowSuggestions(false);
     }
@@ -82,7 +83,9 @@ const GlassSearchBar = () => {
         <div className="glass-specular" />
         <div className="glass-content">
           <div className={`search-container ${showSuggestions ? 'expanded' : ''}`}>
-            <i className="fas fa-search search-icon" />
+            <button type="submit" className="search-button">
+              <i className="fas fa-search search-icon" />
+            </button>
             <input
               ref={inputRef}
               type="text"

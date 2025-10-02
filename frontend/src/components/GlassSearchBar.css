@@ -74,8 +74,6 @@
 }
 
 .search-icon {
-  position: absolute;
-  left: 35px;
   font-size: 18px;
   color: var(--text);
   opacity: 0.8;
@@ -86,6 +84,22 @@
 
 .search-container.expanded .search-icon {
   transform: scale(1.1);
+  opacity: 1;
+}
+
+.search-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  position: absolute;
+  left: 35px;
+  z-index: 5;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.search-button:hover .search-icon {
   opacity: 1;
 }
 
