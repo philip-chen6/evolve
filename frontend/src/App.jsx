@@ -24,7 +24,7 @@ const galaxyFocal = [0.5, 0.25];
 const galaxyRotation = [1.0, 0.0];
 
 function App() {
-  const { isLoading, isIntroComplete, searchQuery, startReverse } = useSceneStore();
+  const { isLoading, isIntroComplete, searchQuery, startReverse, navigationState } = useSceneStore();
   const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
   const [isTimelinePage, setIsTimelinePage] = useState(false);
   const [isReturning, setIsReturning] = useState(false);
@@ -104,21 +104,23 @@ function App() {
       {isLoading && <LoadingScreen />}
       <Overlay />
       {/* Layer 1: Original interactive galaxy background */}
-      <Galaxy
-        focal={galaxyFocal}
-        rotation={galaxyRotation}
-        mouseRepulsion={true}
-        mouseInteraction={false} // Disable internal listener
-        mousePosition={mousePosition} // Pass position as prop
-        density={1}
-        glowIntensity={0.5}
-        saturation={0.5}
-        hueShift={200}
-        repulsionStrength={1.0}
-        twinkleIntensity={0.4}
-        rotationSpeed={0.1}
-        animateIn={false}
-      />
+      <div className="galaxy-background">
+        <Galaxy
+          focal={galaxyFocal}
+          rotation={galaxyRotation}
+          mouseRepulsion={true}
+          mouseInteraction={false} // Disable internal listener
+          mousePosition={mousePosition} // Pass position as prop
+          density={1}
+          glowIntensity={0.5}
+          saturation={0.5}
+          hueShift={200}
+          repulsionStrength={1.0}
+          twinkleIntensity={0.4}
+          rotationSpeed={0.1}
+          animateIn={false}
+        />
+      </div>
 
       {/* Layer 2: New static galaxy, rendered on a transparent canvas */}
       {galaxySceneCanvas}
@@ -130,7 +132,7 @@ function App() {
           className="page-header"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: isReturning ? 0.35 : 0, duration: 1.5 }}
+          transition={{ delay: isReturning ? 0.5 : 0, duration: 1.5 }}
         >
           <h1 className="title">
             {isIntroComplete && (
