@@ -10,6 +10,7 @@ import GlassSearchBar from "./components/GlassSearchBar";
 import Vignette from "./components/Vignette";
 import Overlay from "./components/Overlay";
 import LoadingScreen from "./components/LoadingScreen";
+import { motion } from "framer-motion";
 import {
   EffectComposer,
   Bloom,
@@ -26,6 +27,7 @@ function App() {
   const { isLoading, isIntroComplete, searchQuery, startReverse } = useSceneStore();
   const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
   const [isTimelinePage, setIsTimelinePage] = useState(false);
+  const [isReturning, setIsReturning] = useState(false);
 
   useEffect(() => {
     // On initial application load, if there is any hash, force a hard reload to the base URL.
@@ -44,6 +46,7 @@ function App() {
         // Transitioning from timeline back to galaxy
         startReverse();
         setIsTimelinePage(false); // Exit timeline view to show galaxy
+        setIsReturning(true);
       } else {
         setIsTimelinePage(isNowTimeline);
       }
@@ -123,7 +126,12 @@ function App() {
       {/* Layer 3: UI Elements */}
       <Vignette />
       <div className="content-container">
-        <header className="page-header">
+        <motion.header
+          className="page-header"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: isReturning ? 0.35 : 0, duration: 1.5 }}
+        >
           <h1 className="title">
             {isIntroComplete && (
               <DecryptedText
@@ -147,7 +155,7 @@ function App() {
               to={{ opacity: 1, y: 0 }}
             />
           )}
-        </header>
+        </motion.header>
         <div className="search-bar-wrapper">
           <GlassSearchBar />
         </div>
