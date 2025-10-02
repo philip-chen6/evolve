@@ -174,19 +174,19 @@ void main() {
 export default function Galaxy({
   focal = [0.5, 0.25],
   rotation = [1.0, 0.0],
-  starSpeed = 0.4,
-  density = 1.3,
+  starSpeed = 0.3,
+  density = 1.1,
   hueShift = 120,
   disableAnimation = false,
   speed = 0.67,
   mouseInteraction = true,
   mousePosition, // New prop
-  glowIntensity = 0.7,
+  glowIntensity = 0.3,
   saturation = 0,
-  mouseRepulsion = true,
-  repulsionStrength = 1,
+  mouseRepulsion = false,
+  repulsionStrength = 2,
   twinkleIntensity = 0.3,
-  rotationSpeed = 0.1,
+  rotationSpeed = 0.3,
   autoCenterRepulsion = 0,
   transparent = true,
   animateIn = false,
@@ -293,7 +293,7 @@ export default function Galaxy({
         }
       }
 
-      const lerpFactor = 0.05;
+      const lerpFactor = 0.15;
       smoothMousePos.current.x +=
         (targetMousePos.current.x - smoothMousePos.current.x) * lerpFactor;
       smoothMousePos.current.y +=
