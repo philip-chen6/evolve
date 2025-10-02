@@ -73,7 +73,7 @@ const GlassSearchBar = () => {
   return (
     <div className="glass-search-container">
       <form
-        className="glass-search"
+        className={`glass-search ${showSuggestions ? 'expanded' : ''}`}
         ref={glassRef}
         onSubmit={handleSubmit}
       >

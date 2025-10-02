@@ -1,46 +1,42 @@
-.component-container {
-  display: grid;
-  place-items: center;
+.app-container {
   width: 100vw;
   height: 100vh;
-  position: relative; /* Establish positioning context for absolute children */
-  overflow: hidden; /* Prevent scrollbars */
-}
-
-/* Stack all direct children in the same grid cell */
-.component-container > * {
-  grid-area: 1 / 1;
+  position: relative;
+  overflow: hidden;
 }
 
 .galaxy-background {
-  position: fixed;
-  z-index: -1;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  z-index: 0;
 }
 
 .galaxy-scene-canvas {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1; /* New galaxy is the middle layer */
+  z-index: 1;
   pointer-events: none;
 }
 
 .content-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end; /* Align content to the bottom */
-  z-index: 2; /* UI is the top layer */
-  width: 100%;
-  height: 100%;
-  pointer-events: none; /* Allow mouse events to pass through to the galaxy */
-  padding-bottom: calc(35vh - 50px); /* Move the entire block down */
+  justify-content: flex-end;
+  z-index: 2;
+  pointer-events: none;
+  padding-bottom: calc(35vh - 50px);
   box-sizing: border-box;
 }
 

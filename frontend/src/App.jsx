@@ -100,7 +100,7 @@ function App() {
   }
 
   return (
-    <div className="component-container" onMouseMove={handleMouseMove}>
+    <div className="app-container" onMouseMove={handleMouseMove}>
       {isLoading && <LoadingScreen />}
       <Overlay />
       {/* Layer 1: Original interactive galaxy background */}
