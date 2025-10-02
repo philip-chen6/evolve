@@ -79,10 +79,11 @@ function App() {
           <Selection>
             <EffectComposer multisampling={0} disableNormalPass={true}>
               <Bloom
-                intensity={2.0}
+                intensity={2}
                 luminanceThreshold={0.1}
-                luminanceSmoothing={0.8}
+                luminanceSmoothing={0.1}
                 height={1024}
+                mipmapBlur={true}
               />
             </EffectComposer>
             <Select enabled>
