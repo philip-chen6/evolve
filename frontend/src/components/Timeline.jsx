@@ -100,7 +100,7 @@ const TimelineView = ({ timelineData, promptTopic }) => {
           animateOn="view"
           speed={100}
         />
-        <h2 className="timeline-subheading">powered by claude sonnet 4.5</h2>
+        <h2 className="timeline-subheading font-neuton">powered by claude sonnet 4.5</h2>
       </motion.div>
       <div 
         className={`timeline-scroll-container ${!isAnimationComplete ? 'no-scroll' : ''}`} 

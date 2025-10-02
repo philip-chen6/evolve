@@ -11,6 +11,8 @@
 
 /* The container for content that fades in */
 .timeline-animated-content {
+  font-family: 'Neuton', serif;
+  font-weight: 200;
   position: fixed;
   top: 0;
   left: 0;
@@ -211,4 +213,4 @@
   .timeline-title {
     top: 6rem;
   }
-}
+}.font-neuton { font-family: 'Neuton', serif; font-weight: 300; }
