@@ -94,13 +94,52 @@ const TimelineView = ({ timelineData, promptTopic }) => {
 
   return (
     <>
-      <motion.div className="timeline-title" style={{ opacity }} ref={titleRef}>
-        <DecryptedText
-          text={`timeline for ${promptTopic}`.toLowerCase()}
-          animateOn="view"
-          speed={100}
-        />
-        <h2 className="timeline-subheading font-neuton">powered by claude sonnet 4.5</h2>
+      {/* Mobile-only header */}
+      <motion.div className="timeline-mobile-header" style={{ opacity }}>
+        <a 
+          href="#" 
+          className="return-link font-neuton"
+          onClick={(e) => {
+            e.preventDefault();
+            window.location.hash = '';
+          }}
+        >
+          return
+        </a>
+        <a href="https://www.anthropic.com/news/claude-sonnet-4-5" target="_blank" rel="noopener noreferrer" className="timeline-subheading font-neuton">
+          powered by claude sonnet 4.5
+        </a>
+      </motion.div>
+
+      {/* Desktop header */}
+      <motion.div className="timeline-header" style={{ opacity }}>
+        <div className="timeline-top-bar" style={{ width: titleWidth }}>
+          <a 
+            href="#" 
+            className="return-link font-neuton"
+            onClick={(e) => {
+              e.preventDefault();
+              window.location.hash = '';
+            }}
+          >
+            return
+          </a>
+          <a href="https://www.anthropic.com/news/claude-sonnet-4-5" target="_blank" rel="noopener noreferrer" className="timeline-subheading font-neuton">
+            powered by claude sonnet 4.5
+          </a>
+        </div>
+        <div className="timeline-title" ref={titleRef}>
+          <DecryptedText
+            text={`timeline for ${promptTopic}`.toLowerCase()}
+            animateOn="view"
+            speed={100}
+            onDecryptionComplete={() => {
+              if (titleRef.current) {
+                setTitleWidth(titleRef.current.offsetWidth);
+              }
+            }}
+          />
+        </div>
       </motion.div>
       <div 
         className={`timeline-scroll-container ${!isAnimationComplete ? 'no-scroll' : ''}`} 

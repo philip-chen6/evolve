@@ -22,23 +22,54 @@
   animation: fade-in 1s ease-out;
 }
 
-.timeline-title {
+.timeline-header {
   position: fixed;
   top: 10rem;
   left: 50%;
   transform: translateX(-50%);
   color: #000;
   z-index: 102;
-  font-family: 'Space Grotesk', sans-serif;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timeline-top-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.timeline-title {
+  font-family: 'Geist', sans-serif;
+  font-weight: 100;
   font-size: 2.5rem;
   text-align: center;
-  width: 90%; /* Add a width to prevent it from overflowing the viewport */
+  margin-top: 0.5rem;
 }
 
 .timeline-subheading {
-  font-size: 1rem;
-  font-weight: 300;
-  margin-top: 0.5rem;
+  font-size: 18px;
+  font-family: 'Neuton', serif;
+  font-weight: bold;
+  text-decoration: none;
+  color: #000 !important;
+}
+
+.return-link {
+  font-size: 18px;
+  font-family: 'Neuton', serif;
+  font-weight: bold;
+  text-decoration: none;
+  color: #000 !important;
+}
+
+.timeline-subheading:hover,
+.return-link:hover {
+  text-decoration: underline;
+  text-decoration-color: #000;
 }
 
 .timeline-scroll-container {
@@ -85,6 +116,8 @@
   font-size: 1.2rem;
   color: #000;
   text-align: center;
+  font-family: 'Neuton', serif;
+  font-weight: 300;
 }
 
 .spinner-grow {
@@ -200,6 +233,11 @@
   margin-top: -22px;
 }
 
+.timeline-mobile-header {
+  display: none; /* Hidden by default */
+  z-index: 102;
+}
+
 @media screen and (max-width: 1170px) {
   .vertical-timeline-element-icon .centered-svg-icon {
     width: 32px;
@@ -210,7 +248,26 @@
 }
 
 @media screen and (max-width: 768px) {
-  .timeline-title {
-    top: 6rem;
+  .timeline-header {
+    display: none; /* Hide desktop header on mobile */
   }
-}.font-neuton { font-family: 'Neuton', serif; font-weight: 300; }
+
+  .timeline-mobile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background-color: transparent;
+    box-sizing: border-box;
+  }
+
+  .timeline-scroll-container {
+    padding-top: 12rem; /* Make space for both headers */
+  }
+}
+
+.font-neuton { font-family: 'Neuton', serif; font-weight: 300; }
