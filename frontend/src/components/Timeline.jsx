@@ -40,7 +40,7 @@ const SimpleSpinner = () => {
     );
 };
 
-const TimelineView = ({ timelineData, promptTopic }) => {
+const TimelineView = ({ timelineData, promptTopic, onReturnClick }) => {
   const [displayedCount, setDisplayedCount] = useState(0);
   const [isAnimationComplete, setIsAnimationComplete] = useState(false);
   const [titleWidth, setTitleWidth] = useState(0);
@@ -100,10 +100,7 @@ const TimelineView = ({ timelineData, promptTopic }) => {
         <a 
           href="#" 
           className="return-link font-neuton"
-          onClick={(e) => {
-            e.preventDefault();
-            window.location.hash = '';
-          }}
+          onClick={onReturnClick}
         >
           return
         </a>
@@ -125,10 +122,7 @@ const TimelineView = ({ timelineData, promptTopic }) => {
           <a 
             href="#" 
             className="return-link font-neuton"
-            onClick={(e) => {
-              e.preventDefault();
-              window.location.hash = '';
-            }}
+            onClick={onReturnClick}
           >
             return
           </a>
@@ -190,11 +184,20 @@ const Timeline = () => {
   const [loading, setLoading] = useState(true);
   const [timelineData, setTimelineData] = useState([]);
   const [error, setError] = useState(null);
+  const [isExiting, setIsExiting] = useState(false);
 
   const promptTopic = useMemo(() => {
     const params = new URLSearchParams(window.location.hash.split('?')[1]);
     return params.get('q') || 'large language models'; // Fallback to default
   }, []);
+
+  const handleReturnClick = (e) => {
+    e.preventDefault();
+    setIsExiting(true);
+    setTimeout(() => {
+      window.location.hash = '';
+    }, 250);
+  };
 
   useEffect(() => {
     const fetchTimelineData = async () => {
@@ -240,9 +243,14 @@ const Timeline = () => {
         ) : error ? (
           <div className="error-message">{error}</div>
         ) : (
-          <TimelineView timelineData={timelineData} promptTopic={promptTopic} />
+          <TimelineView
+            timelineData={timelineData}
+            promptTopic={promptTopic}
+            onReturnClick={handleReturnClick}
+          />
         )}
       </div>
+      {isExiting && <div className="timeline-exit-overlay" />}
     </>
   );
 };

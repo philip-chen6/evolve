@@ -275,3 +275,19 @@
 }
 
 .font-neuton { font-family: 'Neuton', serif; font-weight: 300; }
+
+.timeline-exit-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  z-index: 150;
+  animation: fade-to-white 0.250s ease-in forwards;
+}
+
+@keyframes fade-to-white {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
