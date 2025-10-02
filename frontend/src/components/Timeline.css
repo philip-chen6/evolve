@@ -270,7 +270,7 @@
 
   /* Reposition the main header (containing the title) */
   .timeline-header {
-    top: 8rem; /* Move title down */
+    top: 6rem; /* Move title down */
   }
 }
 

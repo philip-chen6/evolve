@@ -49,7 +49,7 @@ const TimelineView = ({ timelineData, promptTopic }) => {
   const hiddenTitleRef = useRef(null);
 
   const { scrollY } = useScroll({ container: scrollContainerRef });
-  const opacity = useTransform(scrollY, [0, 100], [1, 0]);
+  const opacity = useTransform(scrollY, [0, 50], [1, 0]);
 
   useEffect(() => {
     if (hiddenTitleRef.current) {
