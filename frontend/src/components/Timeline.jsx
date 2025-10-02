@@ -46,13 +46,14 @@ const TimelineView = ({ timelineData, promptTopic }) => {
   const [titleWidth, setTitleWidth] = useState(0);
   const scrollContainerRef = useRef(null);
   const titleRef = useRef(null);
+  const hiddenTitleRef = useRef(null);
 
   const { scrollY } = useScroll({ container: scrollContainerRef });
   const opacity = useTransform(scrollY, [0, 100], [1, 0]);
 
   useEffect(() => {
-    if (titleRef.current) {
-      setTitleWidth(titleRef.current.offsetWidth);
+    if (hiddenTitleRef.current) {
+      setTitleWidth(hiddenTitleRef.current.offsetWidth);
     }
   }, [promptTopic]);
 
@@ -111,6 +112,13 @@ const TimelineView = ({ timelineData, promptTopic }) => {
         </a>
       </motion.div>
 
+      {/* Hidden element for measuring final title width */}
+      <div style={{ position: 'absolute', visibility: 'hidden', zIndex: -1 }}>
+        <div className="timeline-title" ref={hiddenTitleRef}>
+          {`timeline for ${promptTopic}`.toLowerCase()}
+        </div>
+      </div>
+
       {/* Desktop header */}
       <motion.div className="timeline-header" style={{ opacity }}>
         <div className="timeline-top-bar" style={{ width: titleWidth }}>
@@ -133,11 +141,6 @@ const TimelineView = ({ timelineData, promptTopic }) => {
             text={`timeline for ${promptTopic}`.toLowerCase()}
             animateOn="view"
             speed={100}
-            onDecryptionComplete={() => {
-              if (titleRef.current) {
-                setTitleWidth(titleRef.current.offsetWidth);
-              }
-            }}
           />
         </div>
       </motion.div>

@@ -28,7 +28,7 @@
   left: 50%;
   transform: translateX(-50%);
   color: #000;
-  z-index: 102;
+  z-index: 104;
   width: 90%;
   display: flex;
   flex-direction: column;
@@ -248,10 +248,12 @@
 }
 
 @media screen and (max-width: 768px) {
-  .timeline-header {
-    display: none; /* Hide desktop header on mobile */
+  /* Hide the desktop-only top bar */
+  .timeline-header .timeline-top-bar {
+    display: none;
   }
 
+  /* Show and style the mobile-only header */
   .timeline-mobile-header {
     display: flex;
     justify-content: space-between;
@@ -262,11 +264,13 @@
     width: 100%;
     padding: 1rem 1.5rem;
     background-color: transparent;
+    z-index: 104; /* Raise above scroll container */
     box-sizing: border-box;
   }
 
-  .timeline-scroll-container {
-    padding-top: 12rem; /* Make space for both headers */
+  /* Reposition the main header (containing the title) */
+  .timeline-header {
+    top: 8rem; /* Move title down */
   }
 }
 
