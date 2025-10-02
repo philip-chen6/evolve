@@ -46,6 +46,7 @@
   flex-direction: column;
   align-items: center;
   pointer-events: auto; /* Re-enable mouse events for content */
+  position: relative;
 }
 
 .search-bar-wrapper {
