@@ -16,6 +16,7 @@ export const useSceneStore = create((set, get) => ({
   isSearchSubmitted: false,
   isSearchHandled: false,
   isFadingToBlack: false,
+  isFadingFromBlack: false,
   isFadeComplete: false,
   overlayColor: '#000000',
   isLoading: true,
@@ -38,15 +39,16 @@ export const useSceneStore = create((set, get) => ({
     set({ isFullscreenActive: isActive });
   },
 
-  submitSearch: (query) => set({ isSearchSubmitted: true, searchQuery: query }),
+  submitSearch: (query) => set({ isSearchSubmitted: true, searchQuery: query, isSearchHandled: false }),
   setSearchHandled: (handled) => set({ isSearchHandled: handled }),
-  startFadeToBlack: () => set({ isFadingToBlack: true }),
+  startFadeToBlack: () => set({ isFadingToBlack: true, isFadeComplete: false }),
+  startFadeFromBlack: () => set({ isFadingFromBlack: true }),
+  completeFadeFromBlack: () => set({ isFadingFromBlack: false }),
   setOverlayColor: (color) => set({ overlayColor: color }),
   setIsLoading: (loading) => set({ isLoading: loading }),
   setIntroComplete: () => set({ isIntroComplete: true }),
-  completeFade: () => set({ isFadeComplete: true }),
-  resetSearch: () => set({ isSearchSubmitted: false, searchQuery: '' }),
-  resetSearchSubmittedFlag: () => set({ isSearchSubmitted: false }),
+  completeFade: () => set({ isFadeComplete: true, isFadingToBlack: false }),
+  resetSearch: () => set({ isSearchSubmitted: false, searchQuery: '', isSearchHandled: false }),
 
   getZoomOutCameraData: (scene) => {
     const { zoomOutCameraData } = get();

@@ -4,7 +4,7 @@ import './Overlay.css';
 import { useSceneStore } from '../core/SceneManager';
 
 const Overlay = () => {
-  const { isFadingToBlack, completeFade, overlayColor } = useSceneStore();
+  const { isFadingToBlack, completeFade, overlayColor, isIntroComplete } = useSceneStore();
 
   return (
     <motion.div
@@ -13,7 +13,7 @@ const Overlay = () => {
       initial={{ opacity: 1 }}
       animate={{ opacity: isFadingToBlack ? 1 : 0 }}
       transition={{
-        duration: isFadingToBlack ? 1.25 : 3.5,
+        duration: isFadingToBlack ? 1.25 : (isIntroComplete ? 2.0 : 3.5),
         delay: isFadingToBlack ? 0.85 : 0,
       }}
       onAnimationComplete={() => {

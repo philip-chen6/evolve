@@ -26,6 +26,7 @@ function App() {
   const { isLoading, isIntroComplete, isFadeComplete, overlayColor, searchQuery } = useSceneStore();
   const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
   const [isTimelinePage, setIsTimelinePage] = useState(false);
+  const [isReversing, setIsReversing] = useState(false);
 
   useEffect(() => {
     // On initial application load, if there is any hash, force a hard reload to the base URL.
@@ -37,7 +38,16 @@ function App() {
 
   useEffect(() => {
     const handleHashChange = () => {
-      setIsTimelinePage(window.location.hash.startsWith('#timeline'));
+      const wasTimeline = isTimelinePage;
+      const isNowTimeline = window.location.hash.startsWith('#timeline');
+
+      if (wasTimeline && !isNowTimeline) {
+        // Transitioning from timeline back to galaxy
+        setIsReversing(true);
+        setIsTimelinePage(false); // Exit timeline view to show galaxy
+      } else {
+        setIsTimelinePage(isNowTimeline);
+      }
     };
 
     window.addEventListener('hashchange', handleHashChange);
@@ -46,7 +56,7 @@ function App() {
     return () => {
       window.removeEventListener('hashchange', handleHashChange);
     };
-  }, []);
+  }, [isTimelinePage]);
   
   useEffect(() => {
     if (isFadeComplete && overlayColor === '#ffffff') {
@@ -81,13 +91,13 @@ function App() {
               />
             </EffectComposer>
             <Select enabled>
-              <GalaxyScene />
+              <GalaxyScene isReversing={isReversing} setIsReversing={setIsReversing} />
             </Select>
           </Selection>
         </Suspense>
       </Canvas>
     ),
-    []
+    [isReversing]
   );
 
   if (isTimelinePage) {

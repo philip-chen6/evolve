@@ -1,6 +1,6 @@
 import { Points, useGLTF } from '@react-three/drei'
 import { useFrame, useLoader, useThree } from '@react-three/fiber'
-import { useMemo, useRef } from 'react'
+import { useMemo, useRef, useEffect } from 'react'
 import { GALAXY, GLOBAL, SCENE_MANAGER } from '../../config/config'
 import { useSceneStore } from '../../core/SceneManager'
 import { gsap } from 'gsap'
@@ -10,7 +10,7 @@ import { useBloomComposer } from '../../hooks/usePostProcessing'
 import { setupZoomCamera } from '../../utils/setupZoomCamera'
 import { Color, Group, MathUtils, Mesh, MeshBasicMaterial, PerspectiveCamera, PointsMaterial, TextureLoader, Vector3 } from 'three'
 
-export function Galaxy() {
+export function Galaxy({ isReversing, setIsReversing }) {
   const { camera } = useThree();
 
   const {
@@ -19,6 +19,7 @@ export function Galaxy() {
     getZoomOutCameraData, setZoomOutCameraData,
     endTransition,
     startFadeToBlack,
+    startFadeFromBlack,
     setOverlayColor,
   } = useSceneStore();
 
@@ -153,6 +154,50 @@ export function Galaxy() {
       }
     });
   }
+
+  function zoomOutGalaxyFunction() {
+    setOverlayColor('#000000');
+    startFadeFromBlack();
+  
+    if (!solarSystemStarRef.current) return;
+  
+    const initial = isMobile ? GLOBAL.INITIAL_CAMERA_MOBILE_POS : GLOBAL.INITIAL_CAMERA_DESKTOP_POS;
+    const solarSystemStarPosition = new Vector3();
+    solarSystemStarRef.current.getWorldPosition(solarSystemStarPosition);
+    const startPosition = solarSystemStarPosition.clone().add(GALAXY.SOLAR_SYSTEM_STAR.CAMERA_OFFSET.clone());
+  
+    const tweenObj = { progress: 0 };
+  
+    const tl = gsap.timeline({
+      onComplete: () => {
+        setIsReversing(false);
+        // remove hash
+        window.history.pushState("", document.title, window.location.pathname + window.location.search);
+      }
+    });
+  
+    tl.to(tweenObj, {
+      progress: 1,
+      duration: 2,
+      ease: "power2.inOut",
+      onUpdate: function () {
+        const newPosition = startPosition.clone().lerp(initial, tweenObj.progress);
+        camera.position.copy(newPosition);
+  
+        const startFov = GALAXY.SOLAR_SYSTEM_STAR.ZOOMED_IN_FOV;
+        const endFov = isMobile ? GLOBAL.INITIAL_CAMERA_MOBILE_FOV : GLOBAL.INITIAL_CAMERA_DESKTOP_FOV;
+        camera.fov = MathUtils.lerp(startFov, endFov, tweenObj.progress);
+  
+        camera.updateProjectionMatrix();
+      }
+    });
+  }
+
+  useEffect(() => {
+    if (isReversing) {
+      zoomOutGalaxyFunction();
+    }
+  }, [isReversing]);
 
   useNavigation({
     sceneKey: sceneKey,

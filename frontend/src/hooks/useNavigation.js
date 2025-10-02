@@ -7,12 +7,12 @@ export function useNavigation({
     zoomFunction,
     isVisible,
 }) {
-    const { isSearchSubmitted, resetSearchSubmittedFlag } = useSceneStore();
+    const { isSearchSubmitted, isSearchHandled, setSearchHandled } = useSceneStore();
 
     useEffect(() => {
-        if (isVisible && isSearchSubmitted) {
+        if (isVisible && isSearchSubmitted && !isSearchHandled) {
             zoomFunction();
-            resetSearchSubmittedFlag(); // Reset after triggering zoom
+            setSearchHandled(true); // Mark search as handled
         }
-    }, [isVisible, isSearchSubmitted, zoomFunction, resetSearchSubmittedFlag, sceneKey]);
+    }, [isVisible, isSearchSubmitted, isSearchHandled, zoomFunction, setSearchHandled, sceneKey]);
 }
