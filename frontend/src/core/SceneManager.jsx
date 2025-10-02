@@ -6,6 +6,7 @@ export const useSceneStore = create((set, get) => ({
   searchQuery: '',
   loadingProgress: 0,
   loadingText: undefined,
+  navigationState: 'idle', // 'idle', 'zoomingIn', 'zoomingOut'
 
   currentScene: 'galaxy', // start scene
 
@@ -13,11 +14,6 @@ export const useSceneStore = create((set, get) => ({
   sceneZoomed: null,
 
   isFullscreenActive: false,
-  isSearchSubmitted: false,
-  isSearchHandled: false,
-  isFadingToBlack: false,
-  isFadingFromBlack: false,
-  isFadeComplete: false,
   overlayColor: '#000000',
   isLoading: true,
   isIntroComplete: false,
@@ -39,16 +35,13 @@ export const useSceneStore = create((set, get) => ({
     set({ isFullscreenActive: isActive });
   },
 
-  submitSearch: (query) => set({ isSearchSubmitted: true, searchQuery: query, isSearchHandled: false }),
-  setSearchHandled: (handled) => set({ isSearchHandled: handled }),
-  startFadeToBlack: () => set({ isFadingToBlack: true, isFadeComplete: false }),
-  startFadeFromBlack: () => set({ isFadingFromBlack: true }),
-  completeFadeFromBlack: () => set({ isFadingFromBlack: false }),
+  submitSearch: (query) => set({ searchQuery: query, navigationState: 'zoomingIn' }),
+  startReverse: () => set({ navigationState: 'zoomingOut' }),
+  resetNavigation: () => set({ navigationState: 'idle', searchQuery: '', overlayColor: '#000000' }),
+
   setOverlayColor: (color) => set({ overlayColor: color }),
   setIsLoading: (loading) => set({ isLoading: loading }),
   setIntroComplete: () => set({ isIntroComplete: true }),
-  completeFade: () => set({ isFadeComplete: true, isFadingToBlack: false }),
-  resetSearch: () => set({ isSearchSubmitted: false, searchQuery: '', isSearchHandled: false }),
 
   getZoomOutCameraData: (scene) => {
     const { zoomOutCameraData } = get();

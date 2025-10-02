@@ -5,12 +5,11 @@ import { GALAXY, GLOBAL, SCENE_MANAGER } from '../../config/config'
 import { useSceneStore } from '../../core/SceneManager'
 import { gsap } from 'gsap'
 import { createNavigationAnimation } from '../../utils/navigationAnimation';
-import { useNavigation } from '../../hooks/useNavigation'
 import { useBloomComposer } from '../../hooks/usePostProcessing'
 import { setupZoomCamera } from '../../utils/setupZoomCamera'
 import { Color, Group, MathUtils, Mesh, MeshBasicMaterial, PerspectiveCamera, PointsMaterial, TextureLoader, Vector3 } from 'three'
 
-export function Galaxy({ isReversing, setIsReversing }) {
+export function Galaxy() {
   const { camera } = useThree();
 
   const {
@@ -18,9 +17,9 @@ export function Galaxy({ isReversing, setIsReversing }) {
     zoomDirection,
     getZoomOutCameraData, setZoomOutCameraData,
     endTransition,
-    startFadeToBlack,
-    startFadeFromBlack,
     setOverlayColor,
+    navigationState,
+    resetNavigation,
   } = useSceneStore();
 
   const sceneKey = 'galaxy'
@@ -91,7 +90,6 @@ export function Galaxy({ isReversing, setIsReversing }) {
 
   function zoomInGalaxyFunction() {
     setOverlayColor('#ffffff');
-    startFadeToBlack();
     setupZoomCamera(camera, 'galaxy', false, {
       getZoomOutCameraData,
       setZoomOutCameraData,
@@ -156,8 +154,7 @@ export function Galaxy({ isReversing, setIsReversing }) {
   }
 
   function zoomOutGalaxyFunction() {
-    setOverlayColor('#000000');
-    startFadeFromBlack();
+    setOverlayColor('#ffffff');
   
     if (!solarSystemStarRef.current) return;
   
@@ -170,7 +167,7 @@ export function Galaxy({ isReversing, setIsReversing }) {
   
     const tl = gsap.timeline({
       onComplete: () => {
-        setIsReversing(false);
+        resetNavigation();
         // remove hash
         window.history.pushState("", document.title, window.location.pathname + window.location.search);
       }
@@ -194,16 +191,12 @@ export function Galaxy({ isReversing, setIsReversing }) {
   }
 
   useEffect(() => {
-    if (isReversing) {
+    if (navigationState === 'zoomingIn') {
+      zoomInGalaxyFunction();
+    } else if (navigationState === 'zoomingOut') {
       zoomOutGalaxyFunction();
     }
-  }, [isReversing]);
-
-  useNavigation({
-    sceneKey: sceneKey,
-    zoomFunction: zoomInGalaxyFunction,
-    isVisible: sceneVisible,
-  });
+  }, [navigationState]);
 
   return (
     <group dispose={null} ref={galaxyRef} position={[0, -5.0, 0]}>
