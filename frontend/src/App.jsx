@@ -1,3 +1,4 @@
+import { USE_BACKEND } from "./config/config.jsx";
 import "./App.css";
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useState, useMemo, useEffect } from "react";
@@ -27,7 +28,13 @@ function App() {
   const { isLoading, isIntroComplete, searchQuery, startReverse, navigationState } = useSceneStore();
   const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
   const [isTimelinePage, setIsTimelinePage] = useState(false);
+<<<<<<< Updated upstream
   const [isReturning, setIsReturning] = useState(false);
+=======
+  const [timelineData, setTimelineData] = useState([]);
+  const [isTimelineLoading, setIsTimelineLoading] = useState(true);
+  const [timelineError, setTimelineError] = useState(null);
+>>>>>>> Stashed changes
 
   useEffect(() => {
     // On initial application load, if there is any hash, force a hard reload to the base URL.
@@ -58,7 +65,38 @@ function App() {
     return () => {
       window.removeEventListener('hashchange', handleHashChange);
     };
+<<<<<<< Updated upstream
   }, [isTimelinePage, startReverse]);
+=======
+  }, []);
+  
+  useEffect(() => {
+    if (isFadeComplete && overlayColor === '#ffffff') {
+      if (USE_BACKEND) {
+        setIsTimelineLoading(true);
+        fetch(`http://localhost:4000/api/query?q=${searchQuery}`)
+          .then(response => response.json())
+          .then(data => {
+            const formattedData = data.papers.map(p => ({
+              id: p.id,
+              title: p.title,
+              summary: p.summary,
+              date: p.year,
+              url: p.url,
+            }));
+            setTimelineData(formattedData);
+            setIsTimelineLoading(false);
+          })
+          .catch(err => {
+            setTimelineError(err.message);
+            setIsTimelineLoading(false);
+          });
+      }
+      const query = encodeURIComponent(searchQuery);
+      window.location.hash = `timeline?q=${query}`;
+    }
+  }, [isFadeComplete, overlayColor, searchQuery]);
+>>>>>>> Stashed changes
   
   const handleMouseMove = (event) => {
     const { clientX, clientY, currentTarget } = event;
@@ -97,6 +135,9 @@ function App() {
   );
 
   if (isTimelinePage) {
+    if (USE_BACKEND) {
+      return <Timeline timelineData={timelineData} loading={isTimelineLoading} error={timelineError} />;
+    }
     return <Timeline />;
   }
 
@@ -166,6 +207,5 @@ function App() {
     </div>
   );
 }
-
 
 export default App;
