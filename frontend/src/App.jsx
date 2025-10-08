@@ -28,13 +28,10 @@ function App() {
   const { isLoading, isIntroComplete, searchQuery, startReverse, navigationState } = useSceneStore();
   const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
   const [isTimelinePage, setIsTimelinePage] = useState(false);
-<<<<<<< Updated upstream
   const [isReturning, setIsReturning] = useState(false);
-=======
   const [timelineData, setTimelineData] = useState([]);
   const [isTimelineLoading, setIsTimelineLoading] = useState(true);
   const [timelineError, setTimelineError] = useState(null);
->>>>>>> Stashed changes
 
   useEffect(() => {
     // On initial application load, if there is any hash, force a hard reload to the base URL.
@@ -65,16 +62,14 @@ function App() {
     return () => {
       window.removeEventListener('hashchange', handleHashChange);
     };
-<<<<<<< Updated upstream
   }, [isTimelinePage, startReverse]);
-=======
-  }, []);
   
   useEffect(() => {
-    if (isFadeComplete && overlayColor === '#ffffff') {
+    if (isTimelinePage) {
       if (USE_BACKEND) {
         setIsTimelineLoading(true);
-        fetch(`http://localhost:4000/api/query?q=${searchQuery}`)
+        const query = new URLSearchParams(window.location.hash.split('?')[1]).get('q');
+        fetch(`http://localhost:4000/api/query?q=${query}`)
           .then(response => response.json())
           .then(data => {
             const formattedData = data.papers.map(p => ({
@@ -92,11 +87,8 @@ function App() {
             setIsTimelineLoading(false);
           });
       }
-      const query = encodeURIComponent(searchQuery);
-      window.location.hash = `timeline?q=${query}`;
     }
-  }, [isFadeComplete, overlayColor, searchQuery]);
->>>>>>> Stashed changes
+  }, [isTimelinePage]);
   
   const handleMouseMove = (event) => {
     const { clientX, clientY, currentTarget } = event;

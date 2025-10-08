@@ -6,8 +6,6 @@ import DecryptedText from './DecryptedText';
 import Waves from './Waves';
 import './Timeline.css';
 
-const API_KEY = process.env.GEMINI_API_KEY || import.meta.env.VITE_GEMINI_API_KEY;
-
 const loadingSteps = [
     "analyzing historical data...",
     "identifying key events...",
@@ -77,7 +75,7 @@ const TimelineView = ({ timelineData, promptTopic, onReturnClick }) => {
       if (container.scrollTop + container.clientHeight >= container.scrollHeight - 200) {
         if (displayedCount < timelineData.length) {
           setDisplayedCount(prev => prev + 1);
-        }
+        } 
       }
     };
 
@@ -180,18 +178,8 @@ const TimelineView = ({ timelineData, promptTopic, onReturnClick }) => {
   );
 };
 
-<<<<<<< Updated upstream
-const Timeline = () => {
-  const [loading, setLoading] = useState(true);
-  const [timelineData, setTimelineData] = useState([]);
-  const [error, setError] = useState(null);
+const Timeline = ({ timelineData, loading, error }) => {
   const [isExiting, setIsExiting] = useState(false);
-=======
-const Timeline = ({ timelineData: initialData, loading: initialLoading, error: initialError }) => {
-  const [loading, setLoading] = useState(initialLoading !== undefined ? initialLoading : true);
-  const [timelineData, setTimelineData] = useState(initialData || []);
-  const [error, setError] = useState(initialError || null);
->>>>>>> Stashed changes
 
   const promptTopic = useMemo(() => {
     const params = new URLSearchParams(window.location.hash.split('?')[1]);
@@ -205,59 +193,6 @@ const Timeline = ({ timelineData: initialData, loading: initialLoading, error: i
       window.location.hash = '';
     }, 250);
   };
-
-  useEffect(() => {
-    // Only fetch if data is not provided via props
-    if (initialData === undefined) {
-      const fetchTimelineData = async () => {
-        try {
-          const prompt = `Generate a timeline of key papers and events for the topic: ${promptTopic}. Provide 6-8 events, and for the final event, make it about the present day and current ongoing research. For each event, give me a title, a one-sentence summary, the year, and a URL to the paper or a relevant resource. Return the data as a valid JSON array of objects, where each object has "id", "title", "summary", "date", and "url" keys. Ensure the JSON is clean and contains only the array.`;
-          
-          const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite-preview-09-2025:generateContent?key=${API_KEY}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              contents: [{ parts: [{ text: prompt }] }],
-              tools: [{ "googleSearch": {} }]
-            }),
-          });
-
-          if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-
-          const data = await response.json();
-          const jsonString = data.candidates[0].content.parts[0].text.replace(/```json|```/g, '').trim();
-          const parsedData = JSON.parse(jsonString);
-          setTimelineData(parsedData);
-        } catch (e) {
-          console.error("Failed to fetch or parse timeline data:", e);
-          setError("Failed to generate timeline. Please try again later.");
-        } finally {
-          setLoading(false);
-        }
-      };
-
-      fetchTimelineData();
-    }
-  }, [promptTopic, initialData]);
-
-  // Update state if props change
-  useEffect(() => {
-    if (initialData !== undefined) {
-      setTimelineData(initialData);
-    }
-  }, [initialData]);
-
-  useEffect(() => {
-    if (initialLoading !== undefined) {
-      setLoading(initialLoading);
-    }
-  }, [initialLoading]);
-
-  useEffect(() => {
-    if (initialError !== undefined) {
-      setError(initialError);
-    }
-  }, [initialError]);
 
   return (
     <>

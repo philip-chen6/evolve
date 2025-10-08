@@ -15,7 +15,7 @@ app.use(express.json());
 // build headers safely: only include x-api-key if present
 const S2_HEADERS = {
   "Content-Type": "application/json",
-  ...(S2 ? { "x-api-key": S2 } : {})
+  ...(S2 ? { "x-api-key": S2 } : {}),
 };
 
 /** 1) Bulk search: top-cited list (lightweight fields) */
@@ -178,7 +178,7 @@ ${JSON.stringify(compact)}
       contents: [{ role: "user", parts: [{ text: prompt }] }],
       generationConfig: {
         temperature: 0,
-        maxOutputTokens: 800,
+        maxOutputTokens: 2048,
         responseMimeType: "application/json",
       },
     });
@@ -186,11 +186,12 @@ ${JSON.stringify(compact)}
     let ids = new Set();
     let reasons = {};
     const txt = resp.response.text();
-    
+    console.log("Gemini response:", txt);
+
     // Robustly find and parse the JSON object from the response
     const jsonMatch = txt.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
-        throw new Error("No valid JSON object found in the LLM response.");
+      throw new Error("No valid JSON object found in the LLM response.");
     }
     const parsed = JSON.parse(jsonMatch[0]);
 
@@ -311,7 +312,7 @@ app.get("/api/query", async (req, res) => {
 
     const bins = makeYearBins(uniqueCandidates);
     const binned = assignBins(uniqueCandidates, bins);
-    console.log(`[${q}] Bins created:`)
+    console.log(`[${q}] Bins created:`);
     binned.forEach((bin) => {
       console.log(
         `  - Range: ${bin.range[0]}-${bin.range[1]}, Papers: ${bin.papers.length}`
