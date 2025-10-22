@@ -38,7 +38,7 @@ const SimpleSpinner = () => {
     );
 };
 
-const TimelineView = ({ timelineData, promptTopic, onReturnClick }) => {
+const TimelineView = ({ timelineData = [], promptTopic, onReturnClick }) => {
   const [displayedCount, setDisplayedCount] = useState(0);
   const [isAnimationComplete, setIsAnimationComplete] = useState(false);
   const [titleWidth, setTitleWidth] = useState(0);
@@ -124,8 +124,8 @@ const TimelineView = ({ timelineData, promptTopic, onReturnClick }) => {
           >
             return
           </a>
-          <a href="https://www.anthropic.com/news/claude-sonnet-4-5" target="_blank" rel="noopener noreferrer" className="timeline-subheading font-neuton">
-            powered by claude sonnet 4.5
+          <a href="https://devpost.com/software/evolve-7wy19h" target="_blank" rel="noopener noreferrer" className="timeline-subheading font-neuton">
+            devpost
           </a>
         </div>
         <div className="timeline-title" ref={titleRef}>
@@ -178,7 +178,7 @@ const TimelineView = ({ timelineData, promptTopic, onReturnClick }) => {
   );
 };
 
-const Timeline = ({ timelineData, loading, error }) => {
+const Timeline = ({ timelineData = [], loading, error }) => {
   const [isExiting, setIsExiting] = useState(false);
 
   const promptTopic = useMemo(() => {
