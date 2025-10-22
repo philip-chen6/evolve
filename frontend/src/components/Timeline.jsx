@@ -102,8 +102,8 @@ const TimelineView = ({ timelineData, promptTopic, onReturnClick }) => {
         >
           return
         </a>
-        <a href="https://www.anthropic.com/news/claude-sonnet-4-5" target="_blank" rel="noopener noreferrer" className="timeline-subheading font-neuton">
-          powered by claude sonnet 4.5
+        <a href="https://devpost.com/software/evolve-7wy19h" target="_blank" rel="noopener noreferrer" className="timeline-subheading font-neuton">
+          read our devpost!
         </a>
       </motion.div>
 
